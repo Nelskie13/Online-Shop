@@ -1,7 +1,7 @@
 "use client";
-import Header from "../layout/Header";
-import Footer from "../layout/Footer";
-import ProductList from "../pages/ProductList";
+import Header from "./Layout/Header";
+import Footer from "./Layout/Footer";
+import ProductList from "./components/ProductList";
 
 export default function Home() {
   return (

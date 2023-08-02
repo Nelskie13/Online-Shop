@@ -1,4 +1,3 @@
-// productSlice.js
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -14,8 +13,6 @@ const productSlice = createSlice({
   name: "productList",
   initialState: {
     data: [],
-    loading: false,
-    error: null,
   },
   reducers: {},
   extraReducers: (builder) => {
