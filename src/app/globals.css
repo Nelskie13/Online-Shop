@@ -1,3 +1,29 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@keyframes rotate-up {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(-180deg);
+  }
+}
+
+@keyframes rotate-down {
+  0% {
+    transform: rotate(-180deg);
+  }
+  100% {
+    transform: rotate(0);
+  }
+}
+
+.animate-rotate-up {
+  animation: rotate-up 0.5s ease-in-out forwards;
+}
+
+.animate-rotate-down {
+  animation: rotate-down 0.5s ease-in-out forwards;
+}

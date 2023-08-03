@@ -30,11 +30,11 @@ function Header() {
                 </button>
               </div>
 
-              <div className="Frame1077240874 justify-start items-center gap-1 flex">
-                <div className="Title text-gray-400 text-base font-bold leading-none">
-                  USD
-                </div>
-                <button className=" w-3 h-3 relative">
+              <div className=" justify-start items-center gap-1 flex">
+                <button className=" w-3 h-3 flex gap-1">
+                  <p className="Title text-gray-400 text-base font-bold leading-none">
+                    USD
+                  </p>
                   <Image src={DownLogo} alt="Logo" />
                 </button>
               </div>

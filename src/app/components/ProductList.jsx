@@ -1,14 +1,21 @@
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProductList } from "../Redux-store/ProductListSlice";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import ButtonCart from "../assets/ButtonsCart.svg";
 import Shop from "../assets/shop.svg";
 import RatingStar from "./RatingStar";
+import DownLogo from "../assets/down.svg";
 
 function ProductList() {
   const dispatch = useDispatch();
   const productListData = useSelector((state) => state.productList.data);
+  const [gridCount, setGridCount] = useState(6);
+  const totalProducts = productListData.length;
+  const [isDropdownOpen1, setIsDropdownOpen1] = useState(false);
+  const [isDropdownOpen2, setIsDropdownOpen2] = useState(false);
+  const [selectedBrand, setSelectedBrand] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   useEffect(() => {
     dispatch(fetchProductList());
@@ -21,9 +28,128 @@ function ProductList() {
     return originalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
 
+  const filteredProducts = productListData.filter((product) => {
+    if (selectedBrand && selectedCategory) {
+      return (
+        product.brand === selectedBrand && product.category === selectedCategory
+      );
+    } else if (selectedBrand) {
+      return product.brand === selectedBrand;
+    } else if (selectedCategory) {
+      return product.category === selectedCategory;
+    } else {
+      return true;
+    }
+  });
+
+  const clearSearch = () => {
+    setSelectedBrand("");
+    setSelectedCategory("");
+  };
+
   return (
     <>
       <div>
+        <div className="flex justify-center items-center mt-14 gap-96 ">
+          <div className="flex items-center">
+            <p className="w-96 text-zinc-900 text-4xl font-bold leading-10">
+              All goods
+            </p>
+          </div>
+
+          <div className="flex gap-3">
+            <div className="relative">
+              <button
+                className="w-28 h-12 px-5 py-3 rounded-3xl border border-blue-600 justify-center items-center gap-1 inline-flex"
+                onClick={() => setIsDropdownOpen1(!isDropdownOpen1)}
+              >
+                <p className="text-blue-600 text-base font-normal leading-normal">
+                  Brands
+                </p>
+                <Image
+                  src={DownLogo}
+                  alt="Logo"
+                  className={`${
+                    isDropdownOpen1
+                      ? "animate-rotate-up"
+                      : "animate-rotate-down"
+                  }`}
+                />
+              </button>
+
+              {isDropdownOpen1 && (
+                <div className="dropdown absolute top-full left-0 bg-white shadow-md p-2 mt-2">
+                  <button
+                    onClick={clearSearch}
+                    className="bg-red-500 text-white rounded-md px-2 py-1 font-semibold text-sm hover:bg-red-600"
+                  >
+                    Clear Search
+                  </button>
+                  <ul
+                    className="py-2 space-y-2"
+                    style={{ maxHeight: "200px", overflowY: "auto" }}
+                  >
+                    {[
+                      ...new Set(
+                        productListData.map((product) => product.brand)
+                      ),
+                    ].map((brand) => (
+                      <li key={brand} onClick={() => setSelectedBrand(brand)}>
+                        {brand}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+
+            <div className="relative">
+              <button
+                className="w-36 h-12 px-5 py-3 rounded-3xl border border-blue-600 justify-center items-center gap-1 inline-flex"
+                onClick={() => setIsDropdownOpen2(!isDropdownOpen2)}
+              >
+                <p className="text-blue-600 text-base font-normal leading-normal">
+                  Categories
+                </p>
+                <Image
+                  src={DownLogo}
+                  alt="Logo"
+                  className={`${
+                    isDropdownOpen2
+                      ? "animate-rotate-up"
+                      : "animate-rotate-down"
+                  }`}
+                />
+              </button>
+
+              {isDropdownOpen2 && (
+                <div className="dropdown absolute top-full left-0 bg-white shadow-md p-2 mt-2">
+                  <button
+                    onClick={clearSearch}
+                    className="bg-red-500 text-white rounded-md px-2 py-1 font-semibold text-sm hover:bg-red-600"
+                  >
+                    Clear Search
+                  </button>
+                  <ul className="py-2 space-y-2">
+                    {[
+                      ...new Set(
+                        productListData.map((product) => product.category)
+                      ),
+                    ].map((category) => (
+                      <li
+                        key={category}
+                        onClick={() => setSelectedCategory(category)}
+                      >
+                        {category}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+
         <div
           className="grid gap-10"
           style={{
@@ -32,10 +158,10 @@ function ProductList() {
             justifyContent: "center",
             alignItems: "center",
             marginBottom: "50px",
-            marginTop: "50px",
+            marginTop: "40px",
           }}
         >
-          {productListData.map((product) => (
+          {filteredProducts.slice(0, gridCount).map((product) => (
             <div
               key={product.id}
               className="w-80 h-84 rounded-md border border-gray-200 grid grid-rows-2"
@@ -48,7 +174,7 @@ function ProductList() {
                 className="h-44 rounded-t-md object-cover"
               />
 
-              <div className="h-44 px-5 py-2.5 bg-slate-50 rounded-b-md ">
+              <div className="h-44 px-5 py-2.5 bg-slate-50 rounded-b-md hover:bg-cyan-100">
                 <div className="h-6 text-zinc-900 text-xl font-bold leading-tight">
                   <span className="line-clamp-1">{product.title}</span>
                 </div>
@@ -103,6 +229,18 @@ function ProductList() {
               </div>
             </div>
           ))}
+        </div>
+
+        <div className="flex justify-center mb-14">
+          <button
+            className="w-30 h-12 px-5 py-4 bg-blue-600 rounded-3xl border border-blue-600 justify-center items-center gap-1 inline-flex"
+            onClick={() => setGridCount((prev) => prev + 6)}
+            disabled={gridCount >= totalProducts}
+          >
+            <p className="text-white text-base font-normal leading-none">
+              {gridCount >= totalProducts ? "No more goods" : "Load more"}
+            </p>
+          </button>
         </div>
       </div>
     </>
