@@ -21,9 +21,9 @@
 }
 
 .animate-rotate-up {
-  animation: rotate-up 0.5s ease-in-out forwards;
+  animation: rotate-up 0.3s ease-in-out forwards;
 }
 
 .animate-rotate-down {
-  animation: rotate-down 0.5s ease-in-out forwards;
+  animation: rotate-down 0.3s ease-in-out forwards;
 }

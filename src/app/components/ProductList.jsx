@@ -1,25 +1,49 @@
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProductList } from "../Redux-store/ProductListSlice";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import ButtonCart from "../assets/ButtonsCart.svg";
 import Shop from "../assets/shop.svg";
 import RatingStar from "./RatingStar";
 import DownLogo from "../assets/down.svg";
+import DownWhiteLogo from "../assets/downWhite.svg";
 
 function ProductList() {
   const dispatch = useDispatch();
   const productListData = useSelector((state) => state.productList.data);
-  const [gridCount, setGridCount] = useState(6);
   const totalProducts = productListData.length;
+  const [gridCount, setGridCount] = useState(6);
   const [isDropdownOpen1, setIsDropdownOpen1] = useState(false);
   const [isDropdownOpen2, setIsDropdownOpen2] = useState(false);
   const [selectedBrand, setSelectedBrand] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
+  const buttonRef1 = useRef(null);
+  const buttonRef2 = useRef(null);
 
   useEffect(() => {
     dispatch(fetchProductList());
   }, [dispatch]);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (
+        (buttonRef1.current &&
+          !buttonRef1.current.contains(event.target) &&
+          isDropdownOpen1) ||
+        (buttonRef2.current &&
+          !buttonRef2.current.contains(event.target) &&
+          isDropdownOpen2)
+      ) {
+        setIsDropdownOpen1(false);
+        setIsDropdownOpen2(false);
+      }
+    }
+
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [isDropdownOpen1, isDropdownOpen2]);
 
   const calculateOriginalPrice = (discountedPrice, discountPercentage) => {
     const originalPrice = Math.floor(
@@ -60,14 +84,21 @@ function ProductList() {
           <div className="flex gap-3">
             <div className="relative">
               <button
-                className="w-28 h-12 px-5 py-3 rounded-3xl border border-blue-600 justify-center items-center gap-1 inline-flex"
+                ref={buttonRef1}
+                className={`w-28 h-12 px-5 py-3 rounded-3xl border border-blue-600 justify-center items-center gap-1 inline-flex ${
+                  isDropdownOpen1 ? "bg-blue-600" : ""
+                }`}
                 onClick={() => setIsDropdownOpen1(!isDropdownOpen1)}
               >
-                <p className="text-blue-600 text-base font-normal leading-normal">
+                <p
+                  className={`text-blue-600 text-base font-normal leading-normal ${
+                    isDropdownOpen1 ? "text-white" : ""
+                  }`}
+                >
                   Brands
                 </p>
                 <Image
-                  src={DownLogo}
+                  src={isDropdownOpen1 ? DownWhiteLogo : DownLogo}
                   alt="Logo"
                   className={`${
                     isDropdownOpen1
@@ -78,15 +109,9 @@ function ProductList() {
               </button>
 
               {isDropdownOpen1 && (
-                <div className="dropdown absolute top-full left-0 bg-white shadow-md p-2 mt-2">
-                  <button
-                    onClick={clearSearch}
-                    className="bg-red-500 text-white rounded-md px-2 py-1 font-semibold text-sm hover:bg-red-600"
-                  >
-                    Clear Search
-                  </button>
+                <div className="dropdown absolute top-full left-0 bg-white shadow-md p-2 mt-2 rounded-lg">
                   <ul
-                    className="py-2 space-y-2"
+                    className="py-2 space-y-2 cursor-pointer"
                     style={{ maxHeight: "200px", overflowY: "auto" }}
                   >
                     {[
@@ -94,25 +119,42 @@ function ProductList() {
                         productListData.map((product) => product.brand)
                       ),
                     ].map((brand) => (
-                      <li key={brand} onClick={() => setSelectedBrand(brand)}>
+                      <li
+                        key={brand}
+                        onClick={() => setSelectedBrand(brand)}
+                        className="hover:bg-gray-200"
+                      >
                         {brand}
                       </li>
                     ))}
                   </ul>
+                  <button
+                    onClick={clearSearch}
+                    className="bg-red-500 text-white rounded-md px-2 py-1 font-semibold text-sm hover:bg-red-600 ml-8 mt-2"
+                  >
+                    Reset
+                  </button>
                 </div>
               )}
             </div>
 
             <div className="relative">
               <button
-                className="w-36 h-12 px-5 py-3 rounded-3xl border border-blue-600 justify-center items-center gap-1 inline-flex"
+                ref={buttonRef2}
+                className={`w-36 h-12 px-5 py-3 rounded-3xl border border-blue-600 justify-center items-center gap-1 inline-flex ${
+                  isDropdownOpen2 ? "bg-blue-600" : ""
+                }`}
                 onClick={() => setIsDropdownOpen2(!isDropdownOpen2)}
               >
-                <p className="text-blue-600 text-base font-normal leading-normal">
+                <p
+                  className={`text-blue-600 text-base font-normal leading-normal ${
+                    isDropdownOpen2 ? "text-white" : ""
+                  }`}
+                >
                   Categories
                 </p>
                 <Image
-                  src={DownLogo}
+                  src={isDropdownOpen2 ? DownWhiteLogo : DownLogo}
                   alt="Logo"
                   className={`${
                     isDropdownOpen2
@@ -123,14 +165,8 @@ function ProductList() {
               </button>
 
               {isDropdownOpen2 && (
-                <div className="dropdown absolute top-full left-0 bg-white shadow-md p-2 mt-2">
-                  <button
-                    onClick={clearSearch}
-                    className="bg-red-500 text-white rounded-md px-2 py-1 font-semibold text-sm hover:bg-red-600"
-                  >
-                    Clear Search
-                  </button>
-                  <ul className="py-2 space-y-2">
+                <div className="dropdown absolute top-full left-0 bg-white shadow-md p-2 mt-2 rounded-lg">
+                  <ul className="py-2 space-y-2 cursor-pointer">
                     {[
                       ...new Set(
                         productListData.map((product) => product.category)
@@ -139,11 +175,18 @@ function ProductList() {
                       <li
                         key={category}
                         onClick={() => setSelectedCategory(category)}
+                        className="hover:bg-gray-200"
                       >
                         {category}
                       </li>
                     ))}
                   </ul>
+                  <button
+                    onClick={clearSearch}
+                    className="bg-red-500 text-white rounded-md px-2 py-1 font-semibold text-sm hover:bg-red-600 ml-8"
+                  >
+                    Reset
+                  </button>
                 </div>
               )}
             </div>
