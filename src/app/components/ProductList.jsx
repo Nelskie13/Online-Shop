@@ -2,11 +2,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchProductList } from "../Redux-store/ProductListSlice";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import ButtonCart from "../assets/ButtonsCart.svg";
+import ButtonCartWhite from "../assets/emptyCartWhite.svg";
 import Shop from "../assets/shop.svg";
 import RatingStar from "./RatingStar";
 import DownLogo from "../assets/down.svg";
 import DownWhiteLogo from "../assets/downWhite.svg";
+import Link from "next/link";
 
 function ProductList() {
   const dispatch = useDispatch();
@@ -166,7 +167,10 @@ function ProductList() {
 
               {isDropdownOpen2 && (
                 <div className="dropdown absolute top-full left-0 bg-white shadow-md p-2 mt-2 rounded-lg">
-                  <ul className="py-2 space-y-2 cursor-pointer">
+                  <ul
+                    className="py-2 space-y-2 cursor-pointer"
+                    style={{ maxHeight: "200px", overflowY: "auto" }}
+                  >
                     {[
                       ...new Set(
                         productListData.map((product) => product.category)
@@ -183,7 +187,7 @@ function ProductList() {
                   </ul>
                   <button
                     onClick={clearSearch}
-                    className="bg-red-500 text-white rounded-md px-2 py-1 font-semibold text-sm hover:bg-red-600 ml-8"
+                    className="bg-red-500 text-white rounded-md px-2 py-1 font-semibold text-sm hover:bg-red-600 ml-8 mt-2"
                   >
                     Reset
                   </button>
@@ -205,72 +209,79 @@ function ProductList() {
           }}
         >
           {filteredProducts.slice(0, gridCount).map((product) => (
-            <div
-              key={product.id}
-              className="w-80 h-84 rounded-md border border-gray-200 grid grid-rows-2"
-            >
-              <Image
-                src={product.thumbnail}
-                width={320}
-                height={165}
-                alt="Logo"
-                className="h-44 rounded-t-md object-cover"
-              />
+            <Link key={product.id} href={`/pages/product/${product.id}`}>
+              <div
+                key={product.id}
+                className="w-80 h-84 rounded-md border border-gray-200 grid grid-rows-2 cursor-pointer"
+              >
+                <Image
+                  src={product.thumbnail}
+                  width={320}
+                  height={165}
+                  alt="Logo"
+                  className="h-44 rounded-t-md object-cover"
+                />
 
-              <div className="h-44 px-5 py-2.5 bg-slate-50 rounded-b-md hover:bg-cyan-100">
-                <div className="h-6 text-zinc-900 text-xl font-bold leading-tight">
-                  <span className="line-clamp-1">{product.title}</span>
-                </div>
-                <div className=" h-10 text-slate-500 text-xs font-normal leading-tight">
-                  <span className="line-clamp-2 my-2">
-                    {product.description}
-                  </span>
-                </div>
-
-                <div className="flex items-center gap-2 border-b border-gray-400 pb-2">
-                  <p className="text-zinc-900 text-xl font-semibold leading-7">
-                    ${product.price}
-                  </p>
-                  <p className="text-slate-500 text-xs font-normal line-through leading-none">
-                    $
-                    {calculateOriginalPrice(
-                      product.price,
-                      product.discountPercentage
-                    )}
-                  </p>
-                  <div className="w-16 h-6 px-2.5 py-1 bg-orange-400 rounded-2xl justify-start items-start gap-2.5 flex justify-center items-center">
-                    <p className="text-white text-xs font-semibold leading-none">
-                      -{product.discountPercentage}%
-                    </p>
+                <div className="h-44 px-5 py-2.5 bg-slate-50 rounded-b-md hover:bg-cyan-100">
+                  <div className="h-6 text-zinc-900 text-xl font-bold leading-tight">
+                    <span className="line-clamp-1">{product.title}</span>
                   </div>
-                </div>
-
-                <div className="flex items-center gap-2 pt-3">
-                  <div className="flex">
-                    <RatingStar rating={product.rating} />
-                    <p
-                      className="text-center text-gray-400 text-xs font-normal leading-3 "
-                      style={{ marginTop: "1px", marginLeft: "4px" }}
-                    >
-                      {product.rating}
-                    </p>
+                  <div className=" h-10 text-slate-500 text-xs font-normal leading-tight">
+                    <span className="line-clamp-2 my-2">
+                      {product.description}
+                    </span>
                   </div>
 
-                  <div className="flex">
-                    <Image src={Shop} alt="Logo" />
-                    <p className="text-gray-400 text-xs font-normal leading-3 flex items-center">
-                      {product.stock}
+                  <div className="flex items-center gap-2 border-b border-gray-400 pb-2">
+                    <p className="text-zinc-900 text-xl font-semibold leading-7">
+                      ${product.price}
                     </p>
+                    <p className="text-slate-500 text-xs font-normal line-through leading-none">
+                      $
+                      {calculateOriginalPrice(
+                        product.price,
+                        product.discountPercentage
+                      )}
+                    </p>
+                    <div className="w-16 h-6 px-2.5 py-1 bg-orange-400 rounded-2xl justify-start items-start gap-2.5 flex justify-center items-center">
+                      <p className="text-white text-xs font-semibold leading-none">
+                        -{product.discountPercentage}%
+                      </p>
+                    </div>
                   </div>
 
-                  <div className="flex ml-auto">
-                    <button>
-                      <Image src={ButtonCart} alt="Logo" />
-                    </button>
+                  <div className="flex items-center gap-2 pt-3">
+                    <div className="flex">
+                      <RatingStar rating={product.rating} />
+                      <p
+                        className="text-center text-gray-400 text-xs font-normal leading-3 "
+                        style={{ marginTop: "1px", marginLeft: "4px" }}
+                      >
+                        {product.rating}
+                      </p>
+                    </div>
+
+                    <div className="flex">
+                      <Image src={Shop} alt="Logo" />
+                      <p className="text-gray-400 text-xs font-normal leading-3 flex items-center">
+                        {product.stock}
+                      </p>
+                    </div>
+
+                    <div className="ButtonCart flex ml-auto">
+                      <button className="w-16 h-8 px-5 py-1 bg-blue-600 rounded-lg justify-center items-center gap-1 inline-flex">
+                        <Image
+                          src={ButtonCartWhite}
+                          alt="Logo"
+                          height={20}
+                          width={20}
+                        />
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
 

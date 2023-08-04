@@ -1,8 +1,8 @@
 import React from "react";
 import Image from "next/image";
-import StoreLogo from "../assets/Logo.svg";
-import DownLogo from "../assets/down.svg";
-import EmptyCartLogo from "../assets/empty.svg";
+import StoreLogo from "../../assets/Logo.svg";
+import DownLogo from "../../assets/down.svg";
+import EmptyCartLogo from "../../assets/emptyCartGray.svg";
 
 function Header() {
   return (
