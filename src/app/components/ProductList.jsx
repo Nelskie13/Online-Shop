@@ -201,7 +201,7 @@ function ProductList() {
           className="grid gap-10"
           style={{
             gridTemplateColumns: "repeat(3, 320px)",
-            gridHeight: "341px",
+            gridTemplateRows: "341px",
             justifyContent: "center",
             alignItems: "center",
             marginBottom: "50px",
@@ -218,7 +218,7 @@ function ProductList() {
                   src={product.thumbnail}
                   width={320}
                   height={165}
-                  alt="Logo"
+                  alt={product.title}
                   className="h-44 rounded-t-md object-cover"
                 />
 
@@ -252,7 +252,7 @@ function ProductList() {
 
                   <div className="flex items-center gap-2 pt-3">
                     <div className="flex">
-                      <RatingStar rating={product.rating} />
+                      <RatingStar rating={product.rating} size={12} />
                       <p
                         className="text-center text-gray-400 text-xs font-normal leading-3 "
                         style={{ marginTop: "1px", marginLeft: "4px" }}

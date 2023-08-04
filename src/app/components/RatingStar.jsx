@@ -1,10 +1,10 @@
 import React from "react";
 
-const Star = () => (
+const Star = ({ size }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="12"
-    height="12"
+    width={size}
+    height={size}
     viewBox="0 0 12 12"
     fill="none"
   >
@@ -15,11 +15,11 @@ const Star = () => (
   </svg>
 );
 
-const StarOutlined = () => (
+const StarOutlined = ({ size }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="12"
-    height="12"
+    width={size}
+    height={size}
     viewBox="0 0 12 12"
     fill="none"
   >
@@ -30,7 +30,7 @@ const StarOutlined = () => (
   </svg>
 );
 
-function RatingStar({ rating }) {
+function RatingStar({ rating, size }) {
   const fullStars = Math.floor(rating); // Number of full stars
   const hasHalfStar = rating % 1 >= 0.5; // Check if there's a half star
 
@@ -39,7 +39,7 @@ function RatingStar({ rating }) {
     .fill()
     .map((_, index) => (
       <div key={`fullStar-${index}`}>
-        <Star />
+        <Star size={size} />
       </div>
     ));
 
@@ -47,7 +47,7 @@ function RatingStar({ rating }) {
   if (hasHalfStar) {
     starsArray.push(
       <div key="halfStar">
-        <Star />
+        <Star size={size} />
       </div>
     );
   }
@@ -57,7 +57,7 @@ function RatingStar({ rating }) {
   while (starsArray.length < totalStars) {
     starsArray.push(
       <div key={`outlinedStar-${starsArray.length}`}>
-        <StarOutlined />
+        <StarOutlined size={size} />
       </div>
     );
   }
