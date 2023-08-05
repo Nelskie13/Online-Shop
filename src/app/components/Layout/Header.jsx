@@ -1,16 +1,26 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import Image from "next/image";
 import StoreLogo from "../../assets/Logo.svg";
 import DownLogo from "../../assets/down.svg";
 import EmptyCartLogo from "../../assets/emptyCartGray.svg";
+import Link from "next/link";
 
 function Header() {
+  const [buttonClicked, setButtonClicked] = useState(false);
+
+  const handleClickCart = () => {
+    setButtonClicked(true);
+  };
+
   return (
     <>
       <div className="navbar w-full h-20 bg-slate-800 flex items-center justify-between">
-        <div className="relative left-20 ">
-          <Image src={StoreLogo} alt="Logo" />
-        </div>
+        <Link href="/">
+          <button className="relative left-20 ">
+            <Image src={StoreLogo} alt="Logo" />
+          </button>
+        </Link>
 
         <div className="relative right-20">
           <div className="Menu w-60 h-12 justify-end items-center gap-20 inline-flex left-20">
@@ -21,14 +31,18 @@ function Header() {
                 </div>
               </button>
 
-              <div className="indicator">
-                <span className="indicator-item badge badge-base-100 text-slate-800 text-xs font-semibold p-1">
-                  4
-                </span>
-                <button>
-                  <Image src={EmptyCartLogo} alt="Logo" />
-                </button>
-              </div>
+              {!buttonClicked && (
+                <div className="indicator mt-2">
+                  <Link href="/pages/shopping-cart">
+                    <span className="indicator-item badge badge-base-100 text-slate-800 text-xs font-semibold p-1">
+                      4
+                    </span>
+                    <button onClick={handleClickCart}>
+                      <Image src={EmptyCartLogo} alt="Logo" />
+                    </button>
+                  </Link>
+                </div>
+              )}
 
               <div className=" justify-start items-center gap-1 flex">
                 <button className=" w-3 h-3 flex gap-1">

@@ -2,12 +2,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchProductList } from "../Redux-store/ProductListSlice";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import ButtonCartWhite from "../assets/emptyCartWhite.svg";
 import Shop from "../assets/shop.svg";
 import RatingStar from "./RatingStar";
 import DownLogo from "../assets/down.svg";
 import DownWhiteLogo from "../assets/downWhite.svg";
 import Link from "next/link";
+import ButtonCart from "./ButtonCart";
 
 function ProductList() {
   const dispatch = useDispatch();
@@ -269,14 +269,7 @@ function ProductList() {
                     </div>
 
                     <div className="ButtonCart flex ml-auto">
-                      <button className="w-16 h-8 px-5 py-1 bg-blue-600 rounded-lg justify-center items-center gap-1 inline-flex">
-                        <Image
-                          src={ButtonCartWhite}
-                          alt="Logo"
-                          height={20}
-                          width={20}
-                        />
-                      </button>
+                      <ButtonCart />
                     </div>
                   </div>
                 </div>

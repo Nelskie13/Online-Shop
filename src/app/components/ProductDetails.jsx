@@ -1,4 +1,3 @@
-"use client";
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchProductDetails } from "../Redux-store/ProductDetailsSlice";
@@ -127,7 +126,7 @@ function ProductDetails({ params }) {
           </div>
         </div>
 
-        <div className="w-80 h-24 flex-col gap-2.5 inline-flex">
+        <div className="w-80 h-24 flex-col gap-2.5 inline-flex text-slate-500 text-base font-normal leading-normal">
           <p>In stock: {stock}</p>
           <p>Brand: {brand}</p>
           <p>Category: {category}</p>
