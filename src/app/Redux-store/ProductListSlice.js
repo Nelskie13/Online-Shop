@@ -15,6 +15,8 @@ const productSlice = createSlice({
   name: "productList",
   initialState: {
     data: [],
+    loading: false,
+    error: null,
   },
   reducers: {},
   extraReducers: (builder) => {

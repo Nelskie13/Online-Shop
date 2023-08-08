@@ -5,14 +5,9 @@ import StoreLogo from "../../assets/Logo.svg";
 import DownLogo from "../../assets/down.svg";
 import EmptyCartLogo from "../../assets/emptyCartGray.svg";
 import Link from "next/link";
+import { Badge } from "@nextui-org/react";
 
 function Header() {
-  const [buttonClicked, setButtonClicked] = useState(false);
-
-  const handleClickCart = () => {
-    setButtonClicked(true);
-  };
-
   return (
     <>
       <div className="navbar w-full h-20 bg-slate-800 flex items-center justify-between">
@@ -31,18 +26,19 @@ function Header() {
                 </div>
               </button>
 
-              {!buttonClicked && (
-                <div className="indicator mt-2">
-                  <Link href="/pages/shopping-cart">
-                    <span className="indicator-item badge badge-base-100 text-slate-800 text-xs font-semibold p-1">
-                      4
-                    </span>
-                    <button onClick={handleClickCart}>
+              <div className="indicator mt-2">
+                <Link href="/pages/shopping-cart">
+                  <button>
+                    <Badge
+                      content="4"
+                      size="sm"
+                      className="bg-white text-center text-slate-800 text-xs font-semibold leading-3"
+                    >
                       <Image src={EmptyCartLogo} alt="Logo" />
-                    </button>
-                  </Link>
-                </div>
-              )}
+                    </Badge>
+                  </button>
+                </Link>
+              </div>
 
               <div className=" justify-start items-center gap-1 flex">
                 <button className=" w-3 h-3 flex gap-1">

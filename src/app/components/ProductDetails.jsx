@@ -1,15 +1,24 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchProductDetails } from "../Redux-store/ProductDetailsSlice";
 import Image from "next/image";
 import RatingStar from "./RatingStar";
-import ButtonCartWhite from "../assets/emptyCartWhite.svg";
+import { addToCart, removeFromCart } from "../Redux-store/CartSlice";
+import { ButtonCart } from "./ProductList";
 
 function ProductDetails({ params }) {
   const { id } = params;
   const dispatch = useDispatch();
   const { data, loading, error } = useSelector((state) => state.productDetails);
+  const [counter, setCounter] = useState(1);
 
+  const handleAddToCart = (product) => {
+    if (counter > 0) {
+      dispatch(addToCart({ product, count: counter }));
+    } else {
+      dispatch(removeFromCart(product.id)); // Remove the item from the cart
+    }
+  };
   useEffect(() => {
     // Check if the id exists and is not undefined
     if (id) {
@@ -133,12 +142,15 @@ function ProductDetails({ params }) {
         </div>
 
         <div className="mt-10">
-          <button className="w-40 h-14 px-5 py-4 bg-blue-600 rounded-lg justify-center items-center gap-1 inline-flex">
-            <p className="text-white text-base font-normal leading-none">
-              Add to bag
-            </p>
-            <Image src={ButtonCartWhite} alt="Logo" height={20} width={20} />
-          </button>
+          <ButtonCart
+            addToCartTitle={"Add to bag"}
+            addToBagStatus={true}
+            className="w-36 h-14"
+            textHover="hover:text-blue-600"
+            onClick={() => handleAddToCart(data)}
+            height="18"
+            width="18"
+          />
         </div>
       </div>
     </div>
