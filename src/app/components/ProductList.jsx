@@ -11,17 +11,14 @@ import ButtonCartBlue from "../assets/emptyCartBlue.svg";
 import Plus from "../assets/plus.svg";
 import Minus from "../assets/remove.svg";
 import Link from "next/link";
-import { addToCart, removeFromCart } from "../Redux-store/CartSlice";
 
 export const ButtonCart = ({
-  id,
   addToCartTitle,
   addToBagStatus,
   className,
   textHover,
   height,
   width,
-  onClick,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [showCounter, setShowCounter] = useState(false);
@@ -29,7 +26,6 @@ export const ButtonCart = ({
   const [counter, setCounter] = useState(1);
   const addToBag = addToBagStatus;
 
-  const dispatch = useDispatch();
   const increment = () => {
     setCounter((prev) => prev + 1);
   };
@@ -43,7 +39,6 @@ export const ButtonCart = ({
   const handleClick = (e) => {
     e.preventDefault();
     if (counter === 0 && showCounter) {
-      dispatch(removeFromCart(id));
       setShowCounter(false);
       setIsActive(false);
     } else {
@@ -67,12 +62,7 @@ export const ButtonCart = ({
         onMouseEnter={handleHover}
         onMouseLeave={handleHoverOut}
         style={{ border: `1px solid ${borderColor}` }}
-        onClick={(e) => {
-          handleClick(e);
-          if (onClick) {
-            onClick(id);
-          }
-        }}
+        onClick={handleClick}
       >
         {showCounter && (
           <div
@@ -84,7 +74,6 @@ export const ButtonCart = ({
             <p className="text-center text-blue-600 text-xs font-normal leading-none w-3">
               {counter}
             </p>
-
             <button className="hover:bg-gray-200" onClick={decrement}>
               <Image
                 src={Minus}
@@ -125,7 +114,6 @@ function ProductList() {
   const [selectedCategory, setSelectedCategory] = useState("");
   const buttonRef1 = useRef(null);
   const buttonRef2 = useRef(null);
-  const counter = 1;
 
   useEffect(() => {
     dispatch(fetchProductList());
@@ -176,14 +164,6 @@ function ProductList() {
   const clearSearch = () => {
     setSelectedBrand("");
     setSelectedCategory("");
-  };
-
-  const handleAddToCart = (product) => {
-    if (counter > 0) {
-      dispatch(addToCart({ product, count: counter }));
-    } else {
-      dispatch(removeFromCart(product.id)); // Remove the item from the cart
-    }
   };
 
   return (
@@ -383,11 +363,7 @@ function ProductList() {
                     </div>
 
                     <div className="ButtonCart flex ml-auto">
-                      <ButtonCart
-                        height="18"
-                        width="18"
-                        onClick={(counter) => handleAddToCart(product, counter)}
-                      />
+                      <ButtonCart height="18" width="18" id={product.id} />
                     </div>
                   </div>
                 </div>

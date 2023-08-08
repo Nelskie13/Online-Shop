@@ -3,22 +3,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchProductDetails } from "../Redux-store/ProductDetailsSlice";
 import Image from "next/image";
 import RatingStar from "./RatingStar";
-import { addToCart, removeFromCart } from "../Redux-store/CartSlice";
 import { ButtonCart } from "./ProductList";
 
 function ProductDetails({ params }) {
   const { id } = params;
   const dispatch = useDispatch();
   const { data, loading, error } = useSelector((state) => state.productDetails);
-  const [counter, setCounter] = useState(1);
 
-  const handleAddToCart = (product) => {
-    if (counter > 0) {
-      dispatch(addToCart({ product, count: counter }));
-    } else {
-      dispatch(removeFromCart(product.id)); // Remove the item from the cart
-    }
-  };
   useEffect(() => {
     // Check if the id exists and is not undefined
     if (id) {
@@ -147,7 +138,6 @@ function ProductDetails({ params }) {
             addToBagStatus={true}
             className="w-36 h-14"
             textHover="hover:text-blue-600"
-            onClick={() => handleAddToCart(data)}
             height="18"
             width="18"
           />
