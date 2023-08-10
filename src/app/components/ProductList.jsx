@@ -6,102 +6,8 @@ import Shop from "../assets/shop.svg";
 import RatingStar from "./RatingStar";
 import DownLogo from "../assets/down.svg";
 import DownWhiteLogo from "../assets/downWhite.svg";
-import ButtonCartWhite from "../assets/emptyCartWhite.svg";
-import ButtonCartBlue from "../assets/emptyCartBlue.svg";
-import Plus from "../assets/plus.svg";
-import Minus from "../assets/remove.svg";
 import Link from "next/link";
-
-export const ButtonCart = ({
-  addToCartTitle,
-  addToBagStatus,
-  className,
-  textHover,
-  height,
-  width,
-}) => {
-  const [isHovered, setIsHovered] = useState(false);
-  const [showCounter, setShowCounter] = useState(false);
-  const [isActive, setIsActive] = useState(false);
-  const [counter, setCounter] = useState(1);
-  const addToBag = addToBagStatus;
-
-  const increment = () => {
-    setCounter((prev) => prev + 1);
-  };
-  const decrement = () => {
-    setCounter((prev) => Math.max(prev - 1, 0));
-  };
-
-  const handleHover = () => setIsHovered(true);
-  const handleHoverOut = () => !isActive && setIsHovered(false);
-
-  const handleClick = (e) => {
-    e.preventDefault();
-    if (counter === 0 && showCounter) {
-      setShowCounter(false);
-      setIsActive(false);
-    } else {
-      setShowCounter(true);
-      setIsActive(true);
-    }
-  };
-
-  const buttonWidth = showCounter ? "28" : "16";
-  const bgColor = isHovered || isActive ? "white" : "blue-600";
-  const borderColor = isHovered || isActive ? "blue" : "transparent";
-  const counterDisplayStyle = showCounter ? "block" : "none";
-  const addToCartTitleDisplayStyle = showCounter ? "none" : "block";
-
-  return (
-    <div className="ButtonContainer">
-      <button
-        className={`CartButton w-${buttonWidth} bg-${bgColor} ${
-          isActive ? "active ButtonCartBlue" : ""
-        }  px-4 py-1 rounded-lg justify-center items-center gap-1 inline-flex ${className}`}
-        onMouseEnter={handleHover}
-        onMouseLeave={handleHoverOut}
-        style={{ border: `1px solid ${borderColor}` }}
-        onClick={handleClick}
-      >
-        {showCounter && (
-          <div
-            className={`Counter flex items-center gap-1 ${counterDisplayStyle}`}
-          >
-            <button className="hover:bg-gray-200 " onClick={increment}>
-              <Image src={Plus} alt="Increment" height={height} width={width} />
-            </button>
-            <p className="text-center text-blue-600 text-xs font-normal leading-none w-3">
-              {counter}
-            </p>
-            <button className="hover:bg-gray-200" onClick={decrement}>
-              <Image
-                src={Minus}
-                alt="Decrement"
-                height={height}
-                width={width}
-              />
-            </button>
-          </div>
-        )}
-        {addToBag && (
-          <p
-            className={`text-white text-base font-normal leading-none ${textHover} `}
-            style={{ display: addToCartTitleDisplayStyle }}
-          >
-            {addToCartTitle}
-          </p>
-        )}
-        <Image
-          src={isHovered ? ButtonCartBlue : ButtonCartWhite}
-          alt="Logo"
-          height={20}
-          width={20}
-        />
-      </button>
-    </div>
-  );
-};
+import ButtonCart from "./ButtonCart";
 
 function ProductList() {
   const dispatch = useDispatch();
@@ -161,9 +67,150 @@ function ProductList() {
     }
   });
 
-  const clearSearch = () => {
-    setSelectedBrand("");
-    setSelectedCategory("");
+  const BrandCategoryFiltering = ({ isCounterActive }) => {
+    const [isDropdownOpen1, setIsDropdownOpen1] = useState(false);
+    const [isDropdownOpen2, setIsDropdownOpen2] = useState(false);
+    const buttonRef1 = useRef(null);
+    const buttonRef2 = useRef(null);
+
+    const clearBrand = () => {
+      setSelectedBrand("");
+    };
+
+    const clearCategory = () => {
+      setSelectedCategory("");
+    };
+
+    useEffect(() => {
+      function handleClickOutside(event) {
+        if (
+          (buttonRef1.current &&
+            !buttonRef1.current.contains(event.target) &&
+            isDropdownOpen1) ||
+          (buttonRef2.current &&
+            !buttonRef2.current.contains(event.target) &&
+            isDropdownOpen2)
+        ) {
+          setIsDropdownOpen1(false);
+          setIsDropdownOpen2(false);
+        }
+      }
+
+      document.addEventListener("click", handleClickOutside);
+      return () => {
+        document.removeEventListener("click", handleClickOutside);
+      };
+    }, [isDropdownOpen1, isDropdownOpen2]);
+
+    return (
+      <div className="flex gap-3">
+        <div className="relative">
+          <button
+            ref={buttonRef1}
+            className={`w-28 h-12 px-5 py-3 rounded-3xl border border-blue-600 justify-center items-center gap-1 inline-flex ${
+              isDropdownOpen1 ? "bg-blue-600" : ""
+            }`}
+            onClick={() => setIsDropdownOpen1(!isDropdownOpen1)}
+          >
+            <p
+              className={`text-blue-600 text-base font-normal leading-normal ${
+                isDropdownOpen1 ? "text-white" : ""
+              }`}
+            >
+              Brands
+            </p>
+            <Image
+              src={isDropdownOpen1 ? DownWhiteLogo : DownLogo}
+              alt="Logo"
+              className={`${
+                isDropdownOpen1 && !isCounterActive ? "animate-rotate-up" : ""
+              }`}
+            />
+          </button>
+
+          {isDropdownOpen1 && (
+            <div className="dropdown absolute top-full left-0 bg-white shadow-md p-2 mt-2 rounded-lg">
+              <ul
+                className="py-2 space-y-2 cursor-pointer"
+                style={{ maxHeight: "200px", overflowY: "auto" }}
+              >
+                {[
+                  ...new Set(productListData.map((product) => product.brand)),
+                ].map((brand) => (
+                  <li
+                    key={brand}
+                    onClick={() => setSelectedBrand(brand)}
+                    className="hover:bg-gray-200"
+                  >
+                    {brand}
+                  </li>
+                ))}
+              </ul>
+              <button
+                onClick={clearBrand}
+                className="bg-red-500 text-white rounded-md px-2 py-1 font-semibold text-sm hover:bg-red-600 ml-8 mt-2"
+              >
+                Reset
+              </button>
+            </div>
+          )}
+        </div>
+
+        <div className="relative">
+          <button
+            ref={buttonRef2}
+            className={`w-36 h-12 px-5 py-3 rounded-3xl border border-blue-600 justify-center items-center gap-1 inline-flex ${
+              isDropdownOpen2 ? "bg-blue-600" : ""
+            }`}
+            onClick={() => setIsDropdownOpen2(!isDropdownOpen2)}
+          >
+            <p
+              className={`text-blue-600 text-base font-normal leading-normal ${
+                isDropdownOpen2 ? "text-white" : ""
+              }`}
+            >
+              Categories
+            </p>
+            <Image
+              src={isDropdownOpen2 ? DownWhiteLogo : DownLogo}
+              alt="Logo"
+              className={`${
+                isDropdownOpen2 && !isCounterActive ? "animate-rotate-up" : ""
+              }`}
+            />
+          </button>
+
+          {isDropdownOpen2 && (
+            <div className="dropdown absolute top-full left-0 bg-white shadow-md p-2 mt-2 rounded-lg">
+              <ul
+                className="py-2 space-y-2 cursor-pointer"
+                style={{ maxHeight: "200px", overflowY: "auto" }}
+              >
+                {[
+                  ...new Set(
+                    productListData.map((product) => product.category)
+                  ),
+                ].map((category) => (
+                  <li
+                    key={category}
+                    onClick={() => setSelectedCategory(category)}
+                    className="hover:bg-gray-200"
+                  >
+                    {category}
+                  </li>
+                ))}
+              </ul>
+              <button
+                onClick={clearCategory}
+                className="bg-red-500 text-white rounded-md px-2 py-1 font-semibold text-sm hover:bg-red-600 ml-8 mt-2"
+              >
+                Reset
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+    );
   };
 
   return (
@@ -175,120 +222,7 @@ function ProductList() {
               All goods
             </p>
           </div>
-
-          <div className="flex gap-3">
-            <div className="relative">
-              <button
-                ref={buttonRef1}
-                className={`w-28 h-12 px-5 py-3 rounded-3xl border border-blue-600 justify-center items-center gap-1 inline-flex ${
-                  isDropdownOpen1 ? "bg-blue-600" : ""
-                }`}
-                onClick={() => setIsDropdownOpen1(!isDropdownOpen1)}
-              >
-                <p
-                  className={`text-blue-600 text-base font-normal leading-normal ${
-                    isDropdownOpen1 ? "text-white" : ""
-                  }`}
-                >
-                  Brands
-                </p>
-                <Image
-                  src={isDropdownOpen1 ? DownWhiteLogo : DownLogo}
-                  alt="Logo"
-                  className={`${
-                    isDropdownOpen1
-                      ? "animate-rotate-up"
-                      : "animate-rotate-down"
-                  }`}
-                />
-              </button>
-
-              {isDropdownOpen1 && (
-                <div className="dropdown absolute top-full left-0 bg-white shadow-md p-2 mt-2 rounded-lg">
-                  <ul
-                    className="py-2 space-y-2 cursor-pointer"
-                    style={{ maxHeight: "200px", overflowY: "auto" }}
-                  >
-                    {[
-                      ...new Set(
-                        productListData.map((product) => product.brand)
-                      ),
-                    ].map((brand) => (
-                      <li
-                        key={brand}
-                        onClick={() => setSelectedBrand(brand)}
-                        className="hover:bg-gray-200"
-                      >
-                        {brand}
-                      </li>
-                    ))}
-                  </ul>
-                  <button
-                    onClick={clearSearch}
-                    className="bg-red-500 text-white rounded-md px-2 py-1 font-semibold text-sm hover:bg-red-600 ml-8 mt-2"
-                  >
-                    Reset
-                  </button>
-                </div>
-              )}
-            </div>
-
-            <div className="relative">
-              <button
-                ref={buttonRef2}
-                className={`w-36 h-12 px-5 py-3 rounded-3xl border border-blue-600 justify-center items-center gap-1 inline-flex ${
-                  isDropdownOpen2 ? "bg-blue-600" : ""
-                }`}
-                onClick={() => setIsDropdownOpen2(!isDropdownOpen2)}
-              >
-                <p
-                  className={`text-blue-600 text-base font-normal leading-normal ${
-                    isDropdownOpen2 ? "text-white" : ""
-                  }`}
-                >
-                  Categories
-                </p>
-                <Image
-                  src={isDropdownOpen2 ? DownWhiteLogo : DownLogo}
-                  alt="Logo"
-                  className={`${
-                    isDropdownOpen2
-                      ? "animate-rotate-up"
-                      : "animate-rotate-down"
-                  }`}
-                />
-              </button>
-
-              {isDropdownOpen2 && (
-                <div className="dropdown absolute top-full left-0 bg-white shadow-md p-2 mt-2 rounded-lg">
-                  <ul
-                    className="py-2 space-y-2 cursor-pointer"
-                    style={{ maxHeight: "200px", overflowY: "auto" }}
-                  >
-                    {[
-                      ...new Set(
-                        productListData.map((product) => product.category)
-                      ),
-                    ].map((category) => (
-                      <li
-                        key={category}
-                        onClick={() => setSelectedCategory(category)}
-                        className="hover:bg-gray-200"
-                      >
-                        {category}
-                      </li>
-                    ))}
-                  </ul>
-                  <button
-                    onClick={clearSearch}
-                    className="bg-red-500 text-white rounded-md px-2 py-1 font-semibold text-sm hover:bg-red-600 ml-8 mt-2"
-                  >
-                    Reset
-                  </button>
-                </div>
-              )}
-            </div>
-          </div>
+          <BrandCategoryFiltering />
         </div>
 
         <div
@@ -363,7 +297,7 @@ function ProductList() {
                     </div>
 
                     <div className="ButtonCart flex ml-auto">
-                      <ButtonCart height="18" width="18" id={product.id} />
+                      <ButtonCart height="18" width="18" product={product} />
                     </div>
                   </div>
                 </div>

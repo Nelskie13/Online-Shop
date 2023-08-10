@@ -1,69 +1,58 @@
 "use client";
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { addToCart, removeFromCart } from "../Redux-store/CartSlice";
+import Image from "next/image";
+import { removeFromCart } from "../Redux-store/CartSlice";
+import CartCounter from "./CartCounter";
 
-function Cart() {
-  const cartItems = useSelector((state) => state.cart.data);
-  const productList = useSelector((state) => state.productList.data);
-
+const Cart = () => {
+  const cartItems = useSelector((state) => state.cart.cartItems);
   const dispatch = useDispatch();
 
-  const handleUpdateCount = (productId, newCount) => {
-    dispatch(addToCart({ productId, count: newCount }));
-  };
-
-  const handleRemoveItem = (productId) => {
+  const removeItem = (productId) => {
     dispatch(removeFromCart(productId));
   };
 
   return (
-    <div className="cart-container">
-      <h2>Your Cart</h2>
-      <ul className="cart-list">
-        {cartItems.map((item) => {
-          // Find the corresponding product from productList using the id
-          const product = productList.find((p) => p.id === item.product?.id);
-
-          return (
-            <li key={item.product?.id} className="cart-item">
-              <div className="item-info">
-                {product && (
-                  <>
-                    <p>Title: {product.title}</p>
-                    <p>Category: {product.category}</p>
-                    <p>Brand: {product.brand}</p>
-                    <p>Price: ${product.price}</p>
-                    <p>Quantity: {item.count}</p>
-                  </>
-                )}
-              </div>
-              <div className="item-actions">
-                <button
-                  onClick={() =>
-                    handleUpdateCount(item.product.id, item.count - 1)
-                  }
-                >
-                  -
-                </button>
-                <span>{item.count}</span>
-                <button
-                  onClick={() =>
-                    handleUpdateCount(item.product.id, item.count + 1)
-                  }
-                >
-                  +
-                </button>
-                <button onClick={() => handleRemoveItem(item.product.id)}>
-                  Remove
-                </button>
-              </div>
-            </li>
-          );
-        })}
-      </ul>
+    <div className="cart-container ">
+      <div className="mt-14 ml-20">
+        <p className="w-96 text-zinc-900 text-4xl font-bold leading-10">
+          Shopping Bag
+        </p>
+      </div>
+      {cartItems.map((item) => (
+        <div
+          key={item.id}
+          className="cart-item grid grid-cols-1 flex gap-10 bg-slate-50 rounded-md flex-col justify-center items-start gap-2.5 inline-flex"
+          style={{
+            width: "1040px",
+            height: "300px",
+          }}
+        >
+          <div className="item-details">
+            {item.thumbnail && (
+              <Image
+                src={item.thumbnail}
+                alt={item.title}
+                width={80}
+                height={80}
+              />
+            )}
+            <div className="item-info">
+              <p>{item.title}</p>
+              <p>Category: {item.category}</p>
+              <p>Brand: {item.brand}</p>
+              <p>Price: ${item.price}</p>
+            </div>
+            <CartCounter product={item} />
+          </div>
+          <div className="item-remove">
+            <button onClick={() => removeItem(item.id)}>Remove</button>
+          </div>
+        </div>
+      ))}
     </div>
   );
-}
+};
 
 export default Cart;

@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import productListReducer from "./ProductListSlice";
 import productDetailsReducer from "./ProductDetailsSlice";
 import cartSliceReducer from "./CartSlice";
+import counterReducer from "./CounterSlice";
 
 // Configure the Redux store
 const store = configureStore({
@@ -9,6 +10,7 @@ const store = configureStore({
     productList: productListReducer,
     productDetails: productDetailsReducer,
     cart: cartSliceReducer,
+    counters: counterReducer,
   },
 });
 

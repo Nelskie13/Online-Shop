@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchProductDetails } from "../Redux-store/ProductDetailsSlice";
 import Image from "next/image";
 import RatingStar from "./RatingStar";
-import { ButtonCart } from "./ProductList";
+import ButtonCart from "./ButtonCart";
 
 function ProductDetails({ params }) {
   const { id } = params;
@@ -140,6 +140,7 @@ function ProductDetails({ params }) {
             textHover="hover:text-blue-600"
             height="18"
             width="18"
+            product={data}
           />
         </div>
       </div>
