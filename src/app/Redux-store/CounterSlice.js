@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {};
+const initialState = JSON.parse(localStorage.getItem("countersState")) || {};
 
 const countersSlice = createSlice({
   name: "counters",
@@ -9,14 +9,17 @@ const countersSlice = createSlice({
     increment: (state, action) => {
       const { id } = action.payload;
       state[id] = (state[id] || 0) + 1;
+      localStorage.setItem("countersState", JSON.stringify(state));
     },
     decrement: (state, action) => {
       const { id } = action.payload;
       state[id] = (state[id] || 0) - 1;
+      localStorage.setItem("countersState", JSON.stringify(state));
     },
     reset: (state, action) => {
       const { id } = action.payload;
       state[id] = 0;
+      localStorage.setItem("countersState", JSON.stringify(state));
     },
   },
 });

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ButtonCartWhite from "../assets/emptyCartWhite.svg";
 import ButtonCartBlue from "../assets/emptyCartBlue.svg";
 import Plus from "../assets/plus.svg";
@@ -23,6 +23,8 @@ function ButtonCart({
   const addToBag = addToBagStatus;
   const dispatch = useDispatch();
   const counter = useSelector((state) => state.counters[product.id]) || 0;
+  const cartItems = useSelector((state) => state.cart.cartItems);
+  const isCartEmpty = cartItems.length === 0;
 
   const incrementCounter = () => {
     dispatch(increment({ id: product.id }));
@@ -42,17 +44,44 @@ function ButtonCart({
       dispatch(addToCart({ ...product, quantity: counter }));
       setShowCounter(true);
       setIsActive(true);
+      const id = product.id;
+      const counterData = {
+        id: id,
+        isCounterActive: true,
+      };
+      localStorage.setItem("counter-" + id, JSON.stringify(counterData));
     } else if (e.target.closest(".Counter")) {
       // Counter is clicked, do nothing
       return;
     } else {
       // Reset counter and remove from cart
-      dispatch(removeFromCart(product));
+      dispatch(removeFromCart(product.id));
       dispatch(reset({ id: product.id }));
       setShowCounter(false);
       setIsActive(false);
+
+      const id = product.id;
+      localStorage.removeItem("counter-" + id);
     }
   };
+
+  useEffect(() => {
+    // Check if the counter is active in localStorage
+    const id = product.id;
+    if (localStorage.getItem("counter-" + id)) {
+      const counterData = JSON.parse(localStorage.getItem("counter-" + id));
+      if (counterData.isCounterActive) {
+        setIsActive(true);
+        setShowCounter(true);
+        setIsHovered(true);
+      }
+      if (isCartEmpty) {
+        setShowCounter(false);
+        setIsActive(false);
+        setIsHovered(false);
+      }
+    }
+  }, [product.id]);
 
   const buttonWidth = showCounter ? "28" : "16";
   const bgColor = isHovered || isActive ? "white" : "blue-600";

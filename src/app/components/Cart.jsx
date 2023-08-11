@@ -3,6 +3,7 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Image from "next/image";
 import { removeFromCart } from "../Redux-store/CartSlice";
+import { reset } from "../Redux-store/CounterSlice";
 import CartCounter from "./CartCounter";
 
 const Cart = () => {
@@ -11,6 +12,7 @@ const Cart = () => {
 
   const removeItem = (productId) => {
     dispatch(removeFromCart(productId));
+    dispatch(reset({ id: productId }));
   };
 
   return (
