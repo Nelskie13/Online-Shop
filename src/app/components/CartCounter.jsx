@@ -7,7 +7,7 @@ import Image from "next/image";
 
 function CartCounter({ product }) {
   const dispatch = useDispatch();
-  const counter = useSelector((state) => state.counters[product.id]) || 0;
+  const counter = useSelector((state) => state.counters[product.id]) || 1;
   const incrementCounter = () => {
     dispatch(increment({ id: product.id }));
   };
@@ -17,15 +17,15 @@ function CartCounter({ product }) {
 
   return (
     <>
-      <div className={`Counter flex items-center gap-1 `}>
+      <div className="Counter flex items-center gap-3">
         <button className="hover:bg-gray-200 " onClick={incrementCounter}>
-          <Image src={Plus} alt="Increment" height={18} width={18} />
+          <Image src={Plus} alt="Increment" height={24} width={24} />
         </button>
-        <p className="text-center text-blue-600 text-xs font-normal leading-none w-3">
+        <p className="text-center text-zinc-900 text-xl font-normal leading-7">
           {counter}
         </p>
         <button className="hover:bg-gray-200" onClick={decrementCounter}>
-          <Image src={Minus} alt="Decrement" height={18} width={18} />
+          <Image src={Minus} alt="Decrement" height={24} width={24} />
         </button>
       </div>
     </>

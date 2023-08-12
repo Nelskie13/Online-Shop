@@ -72,6 +72,7 @@ function ProductDetails({ params }) {
           alt={title}
           width={500}
           height={320}
+          priority={true}
           className="rounded-lg object-fill h-80 border border-gray-200"
         />
 
@@ -88,6 +89,7 @@ function ProductDetails({ params }) {
               alt={title}
               width={140}
               height={140}
+              priority={true}
               className="rounded-md object-cover border border-gray-200"
               style={{
                 height: "140px",
@@ -138,8 +140,9 @@ function ProductDetails({ params }) {
             addToBagStatus={true}
             className="w-36 h-14"
             textHover="hover:text-blue-600"
-            height="18"
-            width="18"
+            textSize={"base"}
+            height={24}
+            width={24}
             product={data}
           />
         </div>

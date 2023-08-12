@@ -8,12 +8,12 @@ const countersSlice = createSlice({
   reducers: {
     increment: (state, action) => {
       const { id } = action.payload;
-      state[id] = (state[id] || 0) + 1;
+      state[id] = (state[id] || 1) + 1;
       localStorage.setItem("countersState", JSON.stringify(state));
     },
     decrement: (state, action) => {
       const { id } = action.payload;
-      state[id] = (state[id] || 0) - 1;
+      state[id] = (state[id] || 1) - 1;
       localStorage.setItem("countersState", JSON.stringify(state));
     },
     reset: (state, action) => {

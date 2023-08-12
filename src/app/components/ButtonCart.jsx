@@ -13,6 +13,7 @@ function ButtonCart({
   addToBagStatus,
   className,
   textHover,
+  textSize,
   height,
   width,
   product,
@@ -22,9 +23,8 @@ function ButtonCart({
   const [isActive, setIsActive] = useState(false);
   const addToBag = addToBagStatus;
   const dispatch = useDispatch();
-  const counter = useSelector((state) => state.counters[product.id]) || 0;
+  const counter = useSelector((state) => state.counters[product.id]) || 1;
   const cartItems = useSelector((state) => state.cart.cartItems);
-  const isCartEmpty = cartItems.length === 0;
 
   const incrementCounter = () => {
     dispatch(increment({ id: product.id }));
@@ -75,13 +75,18 @@ function ButtonCart({
         setShowCounter(true);
         setIsHovered(true);
       }
-      if (isCartEmpty) {
+      const storedItem = localStorage.getItem("counter-" + product.id);
+      if (storedItem && !cartItems.find((item) => item.id === product.id)) {
+        // Item was removed from cart
+
         setShowCounter(false);
         setIsActive(false);
         setIsHovered(false);
+
+        localStorage.removeItem("counter-" + product.id);
       }
     }
-  }, [product.id]);
+  }, [product.id, cartItems]);
 
   const buttonWidth = showCounter ? "28" : "16";
   const bgColor = isHovered || isActive ? "white" : "blue-600";
@@ -113,7 +118,9 @@ function ButtonCart({
                   width={width}
                 />
               </button>
-              <p className="text-center text-blue-600 text-xs font-normal leading-none w-3">
+              <p
+                className={`text-center text-blue-600 text-${textSize} font-normal leading-none w-4 flex justify-center`}
+              >
                 {counter}
               </p>
               <button className="hover:bg-gray-200" onClick={decrementCounter}>

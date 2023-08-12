@@ -248,6 +248,7 @@ function ProductList() {
                   height={165}
                   alt={product.title}
                   className="h-44 rounded-t-md object-cover"
+                  priority={true}
                 />
 
                 <div className="h-44 px-5 py-2.5 bg-slate-50 rounded-b-md hover:bg-cyan-100">
@@ -297,7 +298,12 @@ function ProductList() {
                     </div>
 
                     <div className="ButtonCart flex ml-auto">
-                      <ButtonCart height="18" width="18" product={product} />
+                      <ButtonCart
+                        height="18"
+                        width="18"
+                        product={product}
+                        textSize={"xs"}
+                      />
                     </div>
                   </div>
                 </div>
