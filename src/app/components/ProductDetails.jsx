@@ -53,7 +53,7 @@ function ProductDetails({ params }) {
 
   return (
     <div
-      className="container flex"
+      className="container flex justify-center"
       style={{
         marginTop: "60px",
         marginBottom: "60px",
@@ -139,7 +139,6 @@ function ProductDetails({ params }) {
             addToCartTitle={"Add to bag"}
             addToBagStatus={true}
             className="w-36 h-14"
-            textHover="hover:text-blue-600"
             textSize={"base"}
             height={24}
             width={24}

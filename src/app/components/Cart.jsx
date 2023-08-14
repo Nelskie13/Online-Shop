@@ -18,6 +18,7 @@ const Cart = () => {
     (total, item) => total + (counters[item.id] || 1),
     0
   );
+  const isCartEmpty = cartItems.length === 0;
 
   const removeItem = (productId) => {
     dispatch(removeFromCart(productId));
@@ -45,12 +46,16 @@ const Cart = () => {
   return (
     <>
       <div className="mx-20 my-16">
-        <p className="w-96 text-zinc-900 text-4xl font-bold leading-10 mb-5">
-          Shopping Bag
-        </p>
-        <p className="text-slate-500 text-base font-normal leading-tight">
-          {totalCounter} items in the shopping bag
-        </p>
+        <div className="mb-10 flex justify-center">
+          <div style={{ width: "1040px" }}>
+            <p className="w-96 text-zinc-900 text-4xl font-bold leading-10 mb-5">
+              Shopping Bag
+            </p>
+            <p className="text-slate-500 text-base font-normal leading-tight">
+              {totalCounter} items in the shopping bag
+            </p>
+          </div>
+        </div>
         <div className="container mx-auto grid gap-5">
           {cartItems.map((item) => (
             <div className="cart-container flex justify-center">
@@ -78,7 +83,7 @@ const Cart = () => {
                     </button>
                   </div>
 
-                  <div className="item-details flex ml-10 flex items-center">
+                  <div className="item-details flex ml-11 flex items-center">
                     {item.thumbnail && (
                       <Image
                         className="w-36 h-24 rounded-lg object-cover border border-gray-200 mr-5 flex"
@@ -124,18 +129,26 @@ const Cart = () => {
                   Total: ${calculateTotalAmount()}
                 </p>
                 <div className="Buttons flex gap-5">
-                  <div className="w-auto h-12 px-5 py-4 rounded-3xl border border-blue-600 justify-center items-center gap-1 inline-flex hover:bg-blue-600">
-                    <Link href="/">
-                      <button className="text-blue-600 text-base font-normal leading-none hover:bg-blue-600 hover:text-white">
-                        Continue shopping
-                      </button>
-                    </Link>
-                  </div>
-                  <div className="w-auto h-12 px-5 py-4 bg-blue-600 rounded-3xl border border-blue-600 justify-center items-center gap-1 inline-flex">
-                    <button className="text-white text-base font-normal leading-none">
+                  <Link href="/">
+                    <button className="w-auto h-12 px-5 py-4 text-blue-600 rounded-3xl border border-blue-600 justify-center items-center gap-1 inline-flex hover:bg-blue-600 hover:text-white">
+                      Continue shopping
+                    </button>
+                  </Link>
+
+                  <Link href={"/pages/shopping-cart/place-order"}>
+                    <button
+                      className={`w-auto h-12 px-5 py-4 ${
+                        !isCartEmpty ? "text-blue-600" : "text-white"
+                      } rounded-3xl ${
+                        isCartEmpty
+                          ? "bg-neutral-300"
+                          : "border border-blue-600"
+                      } justify-center items-center gap-1 inline-flex hover:bg-blue-600 hover:text-white`}
+                      disabled={isCartEmpty}
+                    >
                       Place order
                     </button>
-                  </div>
+                  </Link>
                 </div>
               </div>
             </div>

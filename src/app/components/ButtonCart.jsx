@@ -12,7 +12,6 @@ function ButtonCart({
   addToCartTitle,
   addToBagStatus,
   className,
-  textHover,
   textSize,
   height,
   width,
@@ -100,7 +99,7 @@ function ButtonCart({
         <button
           className={`CartButton w-${buttonWidth} bg-${bgColor} ${
             isActive ? "active ButtonCartBlue" : ""
-          }  px-4 py-1 rounded-lg justify-center items-center gap-1 inline-flex ${className}`}
+          }  px-4 py-1 rounded-lg justify-center items-center gap-1 inline-flex ${className} hover:text-blue-600 text-white`}
           onMouseEnter={handleHover}
           onMouseLeave={handleHoverOut}
           style={{ border: `1px solid ${borderColor}` }}
@@ -134,10 +133,7 @@ function ButtonCart({
             </div>
           )}
           {addToBag && (
-            <p
-              className={`text-white text-base font-normal leading-none ${textHover} `}
-              style={{ display: addToCartTitleDisplayStyle }}
-            >
+            <p style={{ display: addToCartTitleDisplayStyle }}>
               {addToCartTitle}
             </p>
           )}

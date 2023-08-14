@@ -6,6 +6,7 @@ import DownLogo from "../../assets/down.svg";
 import EmptyCartLogo from "../../assets/emptyCartGray.svg";
 import Link from "next/link";
 import { Badge } from "@nextui-org/react";
+import Currencies from "@/app/pages/Currencies";
 
 function Header() {
   return (
@@ -40,13 +41,8 @@ function Header() {
                 </Link>
               </div>
 
-              <div className=" justify-start items-center gap-1 flex">
-                <button className=" w-3 h-3 flex gap-1">
-                  <p className="Title text-gray-400 text-base font-bold leading-none">
-                    USD
-                  </p>
-                  <Image src={DownLogo} alt="Logo" />
-                </button>
+              <div className="w-3">
+                <Currencies />
               </div>
             </div>
           </div>
