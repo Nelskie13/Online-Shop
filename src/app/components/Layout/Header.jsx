@@ -1,14 +1,22 @@
 "use client";
-import React, { useState } from "react";
 import Image from "next/image";
 import StoreLogo from "../../assets/Logo.svg";
-import DownLogo from "../../assets/down.svg";
 import EmptyCartLogo from "../../assets/emptyCartGray.svg";
 import Link from "next/link";
 import { Badge } from "@nextui-org/react";
-import Currencies from "@/app/pages/Currencies";
+import { useDispatch, useSelector } from "react-redux";
+import Currency from "../Currency";
 
 function Header() {
+  const cartItems = useSelector((state) => state.cart.cartItems);
+  const counters = useSelector((state) => state.counters);
+  const totalCounter = cartItems.reduce(
+    (total, item) => total + (counters[item.id] || 1),
+    0
+  );
+  const currency = useSelector((state) => state.currencies.data.rates);
+  const dispatch = useDispatch();
+
   return (
     <>
       <div className="navbar w-full h-20 bg-slate-800 flex items-center justify-between">
@@ -31,7 +39,7 @@ function Header() {
                 <Link href="/pages/shopping-cart">
                   <button>
                     <Badge
-                      content="4"
+                      content={totalCounter}
                       size="sm"
                       className="bg-white text-center text-slate-800 text-xs font-semibold leading-3"
                     >
@@ -42,7 +50,7 @@ function Header() {
               </div>
 
               <div className="w-3">
-                <Currencies />
+                <Currency selectedCurrency={currency} dispatched={dispatch} />
               </div>
             </div>
           </div>

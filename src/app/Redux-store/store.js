@@ -3,6 +3,7 @@ import productListReducer from "./ProductListSlice";
 import productDetailsReducer from "./ProductDetailsSlice";
 import cartSliceReducer from "./CartSlice";
 import counterReducer from "./CounterSlice";
+import currenciesReducer from "./CurrenciesSlice";
 
 // Configure the Redux store
 const store = configureStore({
@@ -11,6 +12,7 @@ const store = configureStore({
     productDetails: productDetailsReducer,
     cart: cartSliceReducer,
     counters: counterReducer,
+    currencies: currenciesReducer,
   },
 });
 

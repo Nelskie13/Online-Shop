@@ -18,6 +18,10 @@ function ProductList() {
   const [isDropdownOpen2, setIsDropdownOpen2] = useState(false);
   const [selectedBrand, setSelectedBrand] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
+  const selectedCurrency = useSelector(
+    (state) => state.currencies.selectedCurrency
+  );
+  const exchangeRates = useSelector((state) => state.currencies.data.rates);
   const buttonRef1 = useRef(null);
   const buttonRef2 = useRef(null);
 
@@ -45,13 +49,6 @@ function ProductList() {
       document.removeEventListener("click", handleClickOutside);
     };
   }, [isDropdownOpen1, isDropdownOpen2]);
-
-  const calculateOriginalPrice = (discountedPrice, discountPercentage) => {
-    const originalPrice = Math.floor(
-      (discountedPrice * 100) / (100 - discountPercentage)
-    );
-    return originalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  };
 
   const filteredProducts = productListData.filter((product) => {
     if (selectedBrand && selectedCategory) {
@@ -213,6 +210,48 @@ function ProductList() {
     );
   };
 
+  const calculateOriginalPrice = (discountedPrice, discountPercentage) => {
+    const originalPrice = Math.floor(
+      (discountedPrice * 100) / (100 - discountPercentage)
+    );
+    return originalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
+  const convertPriceToCurrency = (price, currency) => {
+    if (!exchangeRates) {
+      return parseFloat(price).toFixed(2);
+    }
+
+    const rate = exchangeRates[currency];
+    const numericPrice = parseFloat(String(price).replace(/,/g, "")); // Remove commas
+
+    if (isNaN(numericPrice)) {
+      return "Invalid Price";
+    }
+
+    const convertedPrice = numericPrice * rate;
+
+    let formattedPrice;
+    if (currency === "IDR") {
+      // Format IDR with commas as thousands separators and limit to 7 digits
+      formattedPrice = new Intl.NumberFormat("en-ID", {
+        style: "currency",
+        currency: "IDR",
+        maximumFractionDigits: 0,
+        notation: "compact",
+        compactDisplay: "short",
+      }).format(convertedPrice);
+    } else {
+      // Format other currencies with commas as thousands separators and 2 decimal places
+      formattedPrice = new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: currency,
+        maximumFractionDigits: 2,
+      }).format(convertedPrice);
+    }
+
+    return formattedPrice;
+  };
+
   return (
     <>
       <div>
@@ -263,13 +302,15 @@ function ProductList() {
 
                   <div className="flex items-center gap-2 border-b border-gray-400 pb-2">
                     <p className="text-zinc-900 text-xl font-semibold leading-7">
-                      ${product.price}
+                      {convertPriceToCurrency(product.price, selectedCurrency)}
                     </p>
                     <p className="text-slate-500 text-xs font-normal line-through leading-none">
-                      $
-                      {calculateOriginalPrice(
-                        product.price,
-                        product.discountPercentage
+                      {convertPriceToCurrency(
+                        calculateOriginalPrice(
+                          product.price,
+                          product.discountPercentage
+                        ),
+                        selectedCurrency
                       )}
                     </p>
                     <div className="w-16 h-6 px-2.5 py-1 bg-orange-400 rounded-2xl justify-start items-start gap-2.5 flex justify-center items-center">

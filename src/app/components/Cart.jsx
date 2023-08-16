@@ -20,6 +20,11 @@ const Cart = () => {
   );
   const isCartEmpty = cartItems.length === 0;
 
+  const selectedCurrency = useSelector(
+    (state) => state.currencies.selectedCurrency
+  );
+  const exchangeRates = useSelector((state) => state.currencies.data.rates);
+
   const removeItem = (productId) => {
     dispatch(removeFromCart(productId));
     dispatch(reset({ id: productId }));
@@ -32,6 +37,40 @@ const Cart = () => {
     setHoverStates({ ...hoverStates, [id]: false });
   };
 
+  const convertPriceToCurrency = (price) => {
+    if (!exchangeRates) {
+      return parseFloat(price).toFixed(2);
+    }
+
+    const rate = exchangeRates[selectedCurrency];
+    const numericPrice = parseFloat(String(price).replace(/,/g, "")); // Remove commas
+
+    if (isNaN(numericPrice)) {
+      return "Invalid Price";
+    }
+
+    const convertedPrice = numericPrice * rate;
+
+    let formattedPrice;
+    if (selectedCurrency === "IDR") {
+      formattedPrice = new Intl.NumberFormat("en-ID", {
+        style: "currency",
+        currency: "IDR",
+        maximumFractionDigits: 0,
+        notation: "compact",
+        compactDisplay: "short",
+      }).format(convertedPrice);
+    } else {
+      formattedPrice = new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: selectedCurrency,
+        maximumFractionDigits: 2,
+      }).format(convertedPrice);
+    }
+
+    return formattedPrice;
+  };
+
   const calculateTotalAmount = () => {
     let totalAmount = 0;
 
@@ -40,7 +79,7 @@ const Cart = () => {
       totalAmount += item.price * counter;
     });
 
-    return totalAmount;
+    return convertPriceToCurrency(totalAmount);
   };
 
   return (
@@ -114,7 +153,9 @@ const Cart = () => {
                     <CartCounter product={item} />
                     <div className="item-price flex w-60 justify-end">
                       <p className="text-zinc-900 text-xl font-semibold leading-7 flex items-center">
-                        ${item.price * (counters[item.id] || 1)}
+                        {convertPriceToCurrency(
+                          item.price * (counters[item.id] || 1)
+                        )}
                       </p>
                     </div>
                   </div>
@@ -126,7 +167,7 @@ const Cart = () => {
             <div className="Total flex " style={{ width: "1040px" }}>
               <div className="Total container flex justify-between">
                 <p className="text-zinc-900 text-xl font-semibold leading-7">
-                  Total: ${calculateTotalAmount()}
+                  Total: {calculateTotalAmount()}
                 </p>
                 <div className="Buttons flex gap-5">
                   <Link href="/">
