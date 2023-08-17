@@ -216,12 +216,12 @@ function ProductList() {
     );
     return originalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
-  const convertPriceToCurrency = (price, currency) => {
-    if (!exchangeRates) {
+  const convertPriceToCurrency = (price) => {
+    if (!exchangeRates || !selectedCurrency) {
       return parseFloat(price).toFixed(2);
     }
 
-    const rate = exchangeRates[currency];
+    const rate = exchangeRates[selectedCurrency];
     const numericPrice = parseFloat(String(price).replace(/,/g, "")); // Remove commas
 
     if (isNaN(numericPrice)) {
@@ -231,8 +231,7 @@ function ProductList() {
     const convertedPrice = numericPrice * rate;
 
     let formattedPrice;
-    if (currency === "IDR") {
-      // Format IDR with commas as thousands separators and limit to 7 digits
+    if (selectedCurrency === "IDR") {
       formattedPrice = new Intl.NumberFormat("en-ID", {
         style: "currency",
         currency: "IDR",
@@ -241,10 +240,9 @@ function ProductList() {
         compactDisplay: "short",
       }).format(convertedPrice);
     } else {
-      // Format other currencies with commas as thousands separators and 2 decimal places
       formattedPrice = new Intl.NumberFormat("en-US", {
         style: "currency",
-        currency: currency,
+        currency: selectedCurrency,
         maximumFractionDigits: 2,
       }).format(convertedPrice);
     }

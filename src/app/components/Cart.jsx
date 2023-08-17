@@ -8,6 +8,7 @@ import Cross from "../assets/cross.svg";
 import CrossBlue from "../assets/crossBlue.svg";
 import CartCounter from "./CartCounter";
 import Link from "next/link";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const Cart = () => {
   const cartItems = useSelector((state) => state.cart.cartItems);
@@ -38,7 +39,7 @@ const Cart = () => {
   };
 
   const convertPriceToCurrency = (price) => {
-    if (!exchangeRates) {
+    if (!exchangeRates || !selectedCurrency) {
       return parseFloat(price).toFixed(2);
     }
 
@@ -81,6 +82,7 @@ const Cart = () => {
 
     return convertPriceToCurrency(totalAmount);
   };
+  const { loginWithRedirect, isAuthenticated } = useAuth0();
 
   return (
     <>
@@ -179,17 +181,31 @@ const Cart = () => {
                   <Link href={"/pages/shopping-cart/place-order"}>
                     <button
                       className={`w-auto h-12 px-5 py-4 ${
-                        !isCartEmpty ? "text-blue-600" : "text-white"
+                        !isAuthenticated ? "text-white" : "text-blue-600"
                       } rounded-3xl ${
-                        isCartEmpty
-                          ? "bg-neutral-300"
-                          : "border border-blue-600"
+                        isAuthenticated
+                          ? "border border-blue-600"
+                          : "bg-neutral-300"
                       } justify-center items-center gap-1 inline-flex hover:bg-blue-600 hover:text-white`}
-                      disabled={isCartEmpty}
+                      disabled={isCartEmpty || !isAuthenticated}
                     >
                       Place order
                     </button>
                   </Link>
+                  {!isAuthenticated && (
+                    <div className="w-42 flex items-center">
+                      <p className="text-slate-500 text-sm font-normal leading-tight">
+                        To place an order,{" "}
+                        <a
+                          onClick={loginWithRedirect}
+                          style={{ color: "blue" }}
+                          className="cursor-pointer"
+                        >
+                          sign in
+                        </a>
+                      </p>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
