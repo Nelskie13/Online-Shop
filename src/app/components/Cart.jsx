@@ -122,7 +122,7 @@ const Cart = () => {
         </div>
         <div className="container mx-auto grid gap-5">
           {cartItems.map((item) => (
-            <div className="cart-container flex justify-center">
+            <div key={item.id} className="cart-container flex justify-center">
               <div
                 key={item.id}
                 className="cart-item p-5 bg-slate-50 rounded-md flex align-center"

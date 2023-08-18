@@ -109,27 +109,27 @@ function ButtonCart({
             <div
               className={`Counter flex items-center gap-1 ${counterDisplayStyle}`}
             >
-              <button className="hover:bg-gray-200 " onClick={incrementCounter}>
+              <div className="hover:bg-gray-200 " onClick={incrementCounter}>
                 <Image
                   src={Plus}
                   alt="Increment"
                   height={height}
                   width={width}
                 />
-              </button>
+              </div>
               <p
                 className={`text-center text-blue-600 text-${textSize} font-normal leading-none w-4 flex justify-center`}
               >
                 {counter}
               </p>
-              <button className="hover:bg-gray-200" onClick={decrementCounter}>
+              <div className="hover:bg-gray-200" onClick={decrementCounter}>
                 <Image
                   src={Minus}
                   alt="Decrement"
                   height={height}
                   width={width}
                 />
-              </button>
+              </div>
             </div>
           )}
           {addToBag && (

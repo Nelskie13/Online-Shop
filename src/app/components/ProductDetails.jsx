@@ -119,8 +119,9 @@ function ProductDetails({ params }) {
             gridTemplateRows: "140px",
           }}
         >
-          {images.slice(0, 3).map((image) => (
+          {images.slice(0, 3).map((image, index) => (
             <Image
+              key={index}
               src={image}
               alt={title}
               width={140}

@@ -39,7 +39,7 @@ function Success() {
         </div>
         <div className="container grid gap-2 mt-12">
           {cartItems.map((item) => (
-            <div className="cart-item flex">
+            <div key={item.id} className="cart-item flex">
               <div
                 key={item.id}
                 className="cart-item flex h-20 p-2.5 bg-slate-50 rounded-md flex-col justify-center items-start gap-2.5"
