@@ -95,7 +95,7 @@ function ButtonCart({
 
   return (
     <>
-      <div className="ButtonContainer">
+      <section className="ButtonContainer">
         <button
           className={`CartButton w-${buttonWidth} bg-${bgColor} ${
             isActive ? "active ButtonCartBlue" : ""
@@ -144,7 +144,7 @@ function ButtonCart({
             width={20}
           />
         </button>
-      </div>
+      </section>
     </>
   );
 }

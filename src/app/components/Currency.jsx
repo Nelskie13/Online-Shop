@@ -31,7 +31,9 @@ function Currency() {
 
   return (
     <div className="flex">
-      <div className={`relative ${isDropdownOpen ? "z-10" : ""} inline-block`}>
+      <section
+        className={`relative ${isDropdownOpen ? "z-10" : ""} inline-block`}
+      >
         <button
           type="button"
           className="text-gray-400 text-base font-bold leading-none bg-transparent appearance-none border-none outline-none"
@@ -48,7 +50,7 @@ function Currency() {
                 <li key={currencyCode}>
                   <button
                     type="button"
-                    className="text-slate-500 text-sm font-normal leading-tight hover:text-blue-600"
+                    className="text-slate-400 text-sm font-normal leading-tight hover:text-blue-600"
                     onClick={() => handleCurrencyChange(currencyCode)}
                   >
                     {currencyCode}
@@ -58,7 +60,7 @@ function Currency() {
             </ul>
           </div>
         )}
-      </div>
+      </section>
       <Image
         src={Down}
         alt="Logo"

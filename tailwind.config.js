@@ -24,6 +24,12 @@ module.exports = {
           900: "#001731",
         },
       },
+      gridTemplateColumns: {
+        3: "repeat(3, 320px)",
+      },
+    },
+    screens: {
+      mobile: { max: "320px" },
     },
   },
   plugins: [nextui()],

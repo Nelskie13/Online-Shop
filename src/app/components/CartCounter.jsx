@@ -17,7 +17,7 @@ function CartCounter({ product }) {
 
   return (
     <>
-      <div className="Counter flex items-center gap-3">
+      <section className="Counter flex items-center gap-3">
         <button className="hover:bg-gray-200 " onClick={incrementCounter}>
           <Image src={Plus} alt="Increment" height={24} width={24} />
         </button>
@@ -27,7 +27,7 @@ function CartCounter({ product }) {
         <button className="hover:bg-gray-200" onClick={decrementCounter}>
           <Image src={Minus} alt="Decrement" height={24} width={24} />
         </button>
-      </div>
+      </section>
     </>
   );
 }

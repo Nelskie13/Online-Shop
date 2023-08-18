@@ -5,11 +5,11 @@ import Image from "next/image";
 function Profile() {
   const { user, isAuthenticated, isLoading } = useAuth0();
   if (isLoading) {
-    return <div className="text-gray-400">Loading...</div>;
+    return <section className="text-gray-400">Loading...</section>;
   }
   return (
     isAuthenticated && (
-      <div className="Profile flex gap-3">
+      <section className="Profile flex gap-3">
         <img
           src={user.picture}
           alt={user.name}
@@ -20,7 +20,7 @@ function Profile() {
         <p className="text-gray-400 text-base font-bold leading-none flex justify-center items-center">
           {user.name}
         </p>
-      </div>
+      </section>
     )
   );
 }

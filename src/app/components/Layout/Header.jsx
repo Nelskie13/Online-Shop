@@ -22,57 +22,65 @@ function Header() {
   const { loginWithRedirect, logout, isAuthenticated } = useAuth0();
 
   return (
-    <>
-      <div className="navbar w-full h-20 bg-slate-800 flex items-center justify-between">
+    <div className="flex bg-slate-800 justify-center">
+      <header
+        className="navbar h-20 mobile:h-24 bg-slate-800 flex items-center justify-between mobile:items-end"
+        style={{ width: "1200px" }}
+      >
         <Link href="/">
-          <button className="relative left-20 ">
+          <button className="logo-btn relative left-20 mobile:left-2.5 mobile:mb-5">
             <Image src={StoreLogo} alt="Logo" />
           </button>
         </Link>
 
-        <div className="relative right-20">
-          <div className="Menu w-60 h-12 justify-end items-center gap-20 inline-flex left-20">
-            <div className="Frame1077239919 justify-start items-center gap-8 flex">
-              <div className="Profile w-32">
+        <nav className="menu-nav relative right-20 mobile:right-2.5">
+          <ul className="menu-list w-60 h-12 justify-end items-center gap-20 inline-flex left-20">
+            <li className="profile-link justify-start items-center gap-8 flex">
+              <div className="profile-section w-32">
                 <Profile />
               </div>
-              <div className="SignIn w-28 flex justify-center">
+              <div className="signin-section w-28 mobile:w-20 flex justify-center">
                 <button
                   onClick={() => {
                     isAuthenticated ? logout() : loginWithRedirect();
                   }}
-                  className={`Buttons w-${
+                  className={`signin-btn w-${
                     isAuthenticated ? "full" : "24"
-                  } h-12 px-5 py-4 rounded-3xl border border-blue-600 justify-center items-center gap-1 flex`}
+                  } h-12
+                  } px-5 py-4 mobile:px-2.5 rounded-3xl border border-blue-600 justify-center items-center gap-1 flex mobile:relative mobile:top-14 mobile:left-40 mobile:w-28 mobile:h-10`}
                 >
-                  <div className="Title text-blue-600 text-base font-semibold leading-none">
+                  <div className="signin-title text-blue-600 text-base mobile:text-sm font-semibold leading-none mobile:leading-tight">
                     {isAuthenticated ? "Sign Out" : "Sign In"}
                   </div>
                 </button>
               </div>
 
-              <div className="indicator mt-2 w-10 flex justify-center">
+              <div className="indicator mt-2 w-10 flex justify-center mobile:relative mobile:top-14 mobile:right-[170px] mobile:text-blue-600 mobile:mt-1">
                 <Link href="/pages/shopping-cart">
-                  <button>
+                  <button className="cart-button mobile:border mobile:border-blue-600 mobile:rounded-full mobile:w-10 mobile:h-10">
                     <Badge
                       content={totalCounter}
                       size="sm"
-                      className="bg-white text-center text-slate-800 text-xs font-semibold leading-3"
+                      className="cart-badge bg-white text-center text-slate-800 mobile:text-[8px] mobile:w-2.5 mobile:h-2.5 border border-none font-semibold leading-3 mobile:bg-blue-600 mobile:text-white mobile:mt-2.5 mobile:mr-1"
                     >
-                      <Image src={EmptyCartLogo} alt="Logo" />
+                      <Image
+                        src={EmptyCartLogo}
+                        alt="Logo"
+                        className="mobile:mt-2"
+                      />
                     </Badge>
                   </button>
                 </Link>
               </div>
 
-              <div className="Currency w-14">
+              <div className="currency-section w-14">
                 <Currency selectedCurrency={currency} dispatched={dispatch} />
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </>
+            </li>
+          </ul>
+        </nav>
+      </header>
+    </div>
   );
 }
 

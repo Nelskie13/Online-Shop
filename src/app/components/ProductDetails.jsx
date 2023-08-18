@@ -87,103 +87,99 @@ function ProductDetails({ params }) {
 
     return formattedPrice;
   };
-  return (
-    <div
-      className="container flex justify-center"
-      style={{
-        marginTop: "60px",
-        marginBottom: "60px",
-        marginLeft: "80px",
-      }}
-    >
-      <div
-        className="grid gap-4"
-        style={{
-          gridTemplateColumns: "500px",
-          gridTemplateRows: "320px",
-        }}
-      >
-        <Image
-          src={thumbnail}
-          alt={title}
-          width={500}
-          height={320}
-          priority={true}
-          className="rounded-lg object-fill h-80 border border-gray-200"
-        />
 
+  return (
+    <div className="flex justify-center">
+      <div className="flex" style={{ width: "1200px" }}>
         <div
-          className="grid gap-10"
+          className="grid gap-4 ml-20 my-16"
           style={{
-            gridTemplateColumns: "repeat(auto-fill, 140px)",
-            gridTemplateRows: "140px",
+            gridTemplateColumns: "500px",
+            gridTemplateRows: "320px",
           }}
         >
-          {images.slice(0, 3).map((image, index) => (
-            <Image
-              key={index}
-              src={image}
-              alt={title}
-              width={140}
-              height={140}
-              priority={true}
-              className="rounded-md object-cover border border-gray-200"
-              style={{
-                height: "140px",
-              }}
-            />
-          ))}
-        </div>
-      </div>
+          <Image
+            src={thumbnail}
+            alt={title}
+            width={500}
+            height={320}
+            priority={true}
+            className="rounded-lg object-fill h-80 border border-gray-200"
+          />
 
-      <div className="ml-10">
-        <div className="text-zinc-900 text-4xl font-bold leading-10 mb-2.5">
-          {title}
-        </div>
-        <div className="w-72 text-slate-500 text-base font-normal leading-normal mb-5">
-          {description}
-        </div>
-
-        <div className="flex mb-5">
-          <RatingStar rating={rating} size={24} />
-          <p className="text-center text-gray-400 text-base font-normal leading-normal ml-1">
-            {rating}
-          </p>
-        </div>
-
-        <div className="flex items-center gap-2 mb-5">
-          <p className="text-zinc-900 text-4xl font-bold leading-10">
-            {convertPriceToCurrency(price, selectedCurrency)}
-          </p>
-          <p className="text-slate-500 text-xs font-normal line-through leading-none">
-            {convertPriceToCurrency(
-              calculateOriginalPrice(price, discountPercentage),
-              selectedCurrency
-            )}
-          </p>
-          <div className="w-20 h-8 px-2.5 py-1 bg-orange-400 rounded-2xl gap-2.5 flex justify-center items-center">
-            <p className="text-white text-base font-normal leading-normal">
-              -{discountPercentage}%
-            </p>
+          <div
+            className="grid gap-10"
+            style={{
+              gridTemplateColumns: "repeat(auto-fill, 140px)",
+              gridTemplateRows: "140px",
+            }}
+          >
+            {images.slice(0, 3).map((image, index) => (
+              <Image
+                key={index}
+                src={image}
+                alt={title}
+                width={140}
+                height={140}
+                priority={true}
+                className="rounded-md object-cover border border-gray-200"
+                style={{
+                  height: "140px",
+                }}
+              />
+            ))}
           </div>
         </div>
 
-        <div className="w-80 h-24 flex-col gap-2.5 inline-flex text-slate-500 text-base font-normal leading-normal">
-          <p>In stock: {stock}</p>
-          <p>Brand: {brand}</p>
-          <p>Category: {category}</p>
-        </div>
+        <div className="ml-10 my-16">
+          <div className="text-zinc-900 text-4xl font-bold leading-10 mb-2.5">
+            {title}
+          </div>
+          <div className="w-72 text-slate-500 text-base font-normal leading-normal mb-5">
+            {description}
+          </div>
 
-        <div className="mt-10">
-          <ButtonCart
-            addToCartTitle={"Add to bag"}
-            addToBagStatus={true}
-            className="w-36 h-14"
-            textSize={"base"}
-            height={24}
-            width={24}
-            product={data}
-          />
+          <div className="flex mb-5">
+            <RatingStar rating={rating} size={24} />
+            <p className="text-center text-gray-400 text-base font-normal leading-normal ml-1">
+              {rating}
+            </p>
+          </div>
+
+          <div className="flex items-center gap-2 mb-5">
+            <p className="text-zinc-900 text-4xl font-bold leading-10">
+              {convertPriceToCurrency(price, selectedCurrency)}
+            </p>
+            <p className="text-slate-500 text-xs font-normal line-through leading-none">
+              {convertPriceToCurrency(
+                calculateOriginalPrice(price, discountPercentage),
+                selectedCurrency
+              )}
+            </p>
+            <div className="w-20 h-8 px-2.5 py-1 bg-orange-400 rounded-2xl gap-2.5 flex justify-center items-center">
+              <p className="text-white text-base font-normal leading-normal">
+                -{discountPercentage}%
+              </p>
+            </div>
+          </div>
+
+          <div className="w-80 h-24 flex-col gap-2.5 inline-flex text-slate-500 text-base font-normal leading-normal">
+            <p>In stock: {stock}</p>
+            <p>Brand: {brand}</p>
+            <p>Category: {category}</p>
+          </div>
+
+          <div className="mt-10">
+            <ButtonCart
+              addToCartTitle={"Add to bag"}
+              addToBagStatus={true}
+              className="w-36 h-14"
+              textSize={"base"}
+              height={24}
+              width={24}
+              product={data}
+            />
+          </div>
         </div>
       </div>
     </div>
