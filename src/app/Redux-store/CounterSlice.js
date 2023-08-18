@@ -21,8 +21,15 @@ const countersSlice = createSlice({
       state[id] = 0;
       localStorage.setItem("countersState", JSON.stringify(state));
     },
+    resetCounter: (state) => {
+      Object.keys(state).forEach((key) => {
+        state[key] = 0;
+      });
+      localStorage.setItem("countersState", JSON.stringify(state));
+    },
   },
 });
 
-export const { increment, decrement, reset } = countersSlice.actions;
+export const { increment, decrement, reset, resetCounter } =
+  countersSlice.actions;
 export default countersSlice.reducer;

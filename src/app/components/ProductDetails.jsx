@@ -160,7 +160,7 @@ function ProductDetails({ params }) {
               selectedCurrency
             )}
           </p>
-          <div className="w-20 h-8 px-2.5 py-1 bg-orange-400 rounded-2xl justify-start items-start gap-2.5 flex justify-center items-center">
+          <div className="w-20 h-8 px-2.5 py-1 bg-orange-400 rounded-2xl gap-2.5 flex justify-center items-center">
             <p className="text-white text-base font-normal leading-normal">
               -{discountPercentage}%
             </p>

@@ -252,116 +252,114 @@ function ProductList() {
 
   return (
     <>
-      <div>
-        <div className="flex justify-center items-center mt-14 gap-96 ">
-          <div className="flex items-center">
-            <p className="w-96 text-zinc-900 text-4xl font-bold leading-10">
-              All goods
-            </p>
-          </div>
-          <BrandCategoryFiltering />
+      <div className="flex justify-center items-center mt-14 gap-96 ">
+        <div className="flex items-center">
+          <p className="w-96 text-zinc-900 text-4xl font-bold leading-10">
+            All goods
+          </p>
         </div>
+        <BrandCategoryFiltering />
+      </div>
 
-        <div
-          className="grid gap-10"
-          style={{
-            gridTemplateColumns: "repeat(3, 320px)",
-            gridTemplateRows: "341px",
-            justifyContent: "center",
-            alignItems: "center",
-            marginBottom: "50px",
-            marginTop: "40px",
-          }}
-        >
-          {filteredProducts.slice(0, gridCount).map((product) => (
-            <Link key={product.id} href={`/pages/product/${product.id}`}>
-              <div
-                key={product.id}
-                className="w-80 h-84 rounded-md border border-gray-200 grid grid-rows-2 cursor-pointer"
-              >
-                <Image
-                  src={product.thumbnail}
-                  width={320}
-                  height={165}
-                  alt={product.title}
-                  className="h-44 rounded-t-md object-cover"
-                  priority={true}
-                />
+      <div
+        className="grid gap-10"
+        style={{
+          gridTemplateColumns: "repeat(3, 320px)",
+          gridTemplateRows: "341px",
+          justifyContent: "center",
+          alignItems: "center",
+          marginBottom: "50px",
+          marginTop: "40px",
+        }}
+      >
+        {filteredProducts.slice(0, gridCount).map((product) => (
+          <Link key={product.id} href={`/pages/product/${product.id}`}>
+            <div
+              key={product.id}
+              className="w-80 h-84 rounded-md border border-gray-200 grid grid-rows-2 cursor-pointer"
+            >
+              <Image
+                src={product.thumbnail}
+                width={320}
+                height={165}
+                alt={product.title}
+                className="h-44 rounded-t-md object-cover"
+                priority={true}
+              />
 
-                <div className="h-44 px-5 py-2.5 bg-slate-50 rounded-b-md hover:bg-cyan-100">
-                  <div className="h-6 text-zinc-900 text-xl font-bold leading-tight">
-                    <span className="line-clamp-1">{product.title}</span>
-                  </div>
-                  <div className=" h-10 text-slate-500 text-xs font-normal leading-tight">
-                    <span className="line-clamp-2 my-2">
-                      {product.description}
-                    </span>
-                  </div>
+              <div className="h-44 px-5 py-2.5 bg-slate-50 rounded-b-md hover:bg-cyan-100">
+                <div className="h-6 text-zinc-900 text-xl font-bold leading-tight">
+                  <span className="line-clamp-1">{product.title}</span>
+                </div>
+                <div className=" h-10 text-slate-500 text-xs font-normal leading-tight">
+                  <span className="line-clamp-2 my-2">
+                    {product.description}
+                  </span>
+                </div>
 
-                  <div className="flex items-center gap-2 border-b border-gray-400 pb-2">
-                    <p className="text-zinc-900 text-xl font-semibold leading-7">
-                      {convertPriceToCurrency(product.price, selectedCurrency)}
+                <div className="flex items-center gap-2 border-b border-gray-400 pb-2">
+                  <p className="text-zinc-900 text-xl font-semibold leading-7">
+                    {convertPriceToCurrency(product.price, selectedCurrency)}
+                  </p>
+                  <p className="text-slate-500 text-xs font-normal line-through leading-none">
+                    {convertPriceToCurrency(
+                      calculateOriginalPrice(
+                        product.price,
+                        product.discountPercentage
+                      ),
+                      selectedCurrency
+                    )}
+                  </p>
+                  <div className="w-16 h-6 px-2.5 py-1 bg-orange-400 rounded-2xl gap-2.5 flex justify-center items-center">
+                    <p className="text-white text-xs font-semibold leading-none">
+                      -{product.discountPercentage}%
                     </p>
-                    <p className="text-slate-500 text-xs font-normal line-through leading-none">
-                      {convertPriceToCurrency(
-                        calculateOriginalPrice(
-                          product.price,
-                          product.discountPercentage
-                        ),
-                        selectedCurrency
-                      )}
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2 pt-3">
+                  <div className="flex">
+                    <RatingStar rating={product.rating} size={12} />
+                    <p
+                      className="text-center text-gray-400 text-xs font-normal leading-3 "
+                      style={{ marginTop: "1px", marginLeft: "4px" }}
+                    >
+                      {product.rating}
                     </p>
-                    <div className="w-16 h-6 px-2.5 py-1 bg-orange-400 rounded-2xl justify-start items-start gap-2.5 flex justify-center items-center">
-                      <p className="text-white text-xs font-semibold leading-none">
-                        -{product.discountPercentage}%
-                      </p>
-                    </div>
                   </div>
 
-                  <div className="flex items-center gap-2 pt-3">
-                    <div className="flex">
-                      <RatingStar rating={product.rating} size={12} />
-                      <p
-                        className="text-center text-gray-400 text-xs font-normal leading-3 "
-                        style={{ marginTop: "1px", marginLeft: "4px" }}
-                      >
-                        {product.rating}
-                      </p>
-                    </div>
+                  <div className="flex">
+                    <Image src={Shop} alt="Logo" />
+                    <p className="text-gray-400 text-xs font-normal leading-3 flex items-center">
+                      {product.stock}
+                    </p>
+                  </div>
 
-                    <div className="flex">
-                      <Image src={Shop} alt="Logo" />
-                      <p className="text-gray-400 text-xs font-normal leading-3 flex items-center">
-                        {product.stock}
-                      </p>
-                    </div>
-
-                    <div className="ButtonCart flex ml-auto">
-                      <ButtonCart
-                        height="18"
-                        width="18"
-                        product={product}
-                        textSize={"xs"}
-                      />
-                    </div>
+                  <div className="ButtonCart flex ml-auto">
+                    <ButtonCart
+                      height="18"
+                      width="18"
+                      product={product}
+                      textSize={"xs"}
+                    />
                   </div>
                 </div>
               </div>
-            </Link>
-          ))}
-        </div>
+            </div>
+          </Link>
+        ))}
+      </div>
 
-        <div className="flex justify-center mb-14">
-          <button
-            className="w-30 h-12 px-5 py-4 bg-blue-600 rounded-3xl border border-blue-600 justify-center items-center gap-1 inline-flex"
-            onClick={() => setGridCount((prev) => prev + 6)}
-            disabled={gridCount >= totalProducts}
-          >
-            <p className="text-white text-base font-normal leading-none">
-              {gridCount >= totalProducts ? "No more goods" : "Load more"}
-            </p>
-          </button>
-        </div>
+      <div className="flex justify-center mb-14">
+        <button
+          className="w-30 h-12 px-5 py-4 bg-blue-600 rounded-3xl border border-blue-600 justify-center items-center gap-1 inline-flex"
+          onClick={() => setGridCount((prev) => prev + 6)}
+          disabled={gridCount >= totalProducts}
+        >
+          <p className="text-white text-base font-normal leading-none">
+            {gridCount >= totalProducts ? "No more goods" : "Load more"}
+          </p>
+        </button>
       </div>
     </>
   );

@@ -1,14 +1,17 @@
 "use client";
 
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
 import Link from "next/link";
 import PlaceOrder from "../assets/PlaceOrder.svg";
+import { resetCart } from "../Redux-store/CartSlice";
+import { resetCounter } from "../Redux-store/CounterSlice";
 
 function Success() {
   const cartItems = useSelector((state) => state.cart.cartItems);
   const counters = useSelector((state) => state.counters);
+  const dispatch = useDispatch();
 
   function getItemText(itemCount) {
     return itemCount === 1 ? "item" : "items";
@@ -39,7 +42,7 @@ function Success() {
             <div className="cart-item flex">
               <div
                 key={item.id}
-                className="cart-item flex h-20 p-2.5 bg-slate-50 rounded-md flex-col justify-center items-start gap-2.5 inline-flex"
+                className="cart-item flex h-20 p-2.5 bg-slate-50 rounded-md flex-col justify-center items-start gap-2.5"
                 style={{ width: "500px" }}
               >
                 <div className="item-container flex gap-5">
@@ -70,7 +73,13 @@ function Success() {
         </div>
         <div className="button-container mt-10">
           <Link href="/">
-            <button className="w-auto h-12 px-5 py-4 text-blue-600 rounded-3xl border border-blue-600 justify-center items-center gap-1 inline-flex hover:bg-blue-600 hover:text-white">
+            <button
+              onClick={() => {
+                dispatch(resetCounter());
+                dispatch(resetCart());
+              }}
+              className="w-auto h-12 px-5 py-4 text-blue-600 rounded-3xl border border-blue-600 justify-center items-center gap-1 inline-flex hover:bg-blue-600 hover:text-white"
+            >
               Continue shopping
             </button>
           </Link>

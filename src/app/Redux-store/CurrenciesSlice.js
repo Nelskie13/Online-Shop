@@ -30,7 +30,7 @@ const currenciesSlice = createSlice({
     data: {},
     loading: false,
     error: null,
-    selectedCurrency: localStorage.getItem("selectedCurrency"), // Add the selectedCurrency field to the initial state
+    selectedCurrency: localStorage.getItem("selectedCurrency") || "USD", // Add the selectedCurrency field to the initial state
   },
   reducers: {
     setSelectedCurrency: (state, action) => {

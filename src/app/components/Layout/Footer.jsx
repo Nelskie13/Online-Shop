@@ -5,7 +5,7 @@ import Image from "next/image";
 function Footer() {
   return (
     <>
-      <div className="Footer w-full h-44 px-20 py-14 bg-zinc-900 justify-center items-start inline-flex justify-between">
+      <div className="Footer w-full h-44 px-20 py-14 bg-zinc-900  items-start inline-flex justify-between">
         <div className="Frame12345625 self-stretch flex-col justify-start items-start gap-2.5 inline-flex">
           <div className="FollowUs text-white text-xs font-normal leading-none">
             Follow Us

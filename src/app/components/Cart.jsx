@@ -82,7 +82,30 @@ const Cart = () => {
 
     return convertPriceToCurrency(totalAmount);
   };
-  const { loginWithRedirect, isAuthenticated } = useAuth0();
+  const { loginWithRedirect, isAuthenticated, user } = useAuth0();
+
+  const displayCartSummary = ({
+    user,
+    cartItems,
+    selectedCurrency,
+    exchangeRates,
+  }) => {
+    const cartSummary = {
+      userName: user.name,
+      userID: user.sub,
+      item: cartItems.map((item) => ({
+        productId: item.id,
+        item: item.title,
+        amount: convertPriceToCurrency(item.price * (counters[item.id] || 1)),
+      })),
+      currency: {
+        name: selectedCurrency,
+        rate: exchangeRates[selectedCurrency],
+      },
+    };
+
+    console.log(JSON.stringify(cartSummary, null, 2));
+  };
 
   return (
     <>
@@ -124,7 +147,7 @@ const Cart = () => {
                     </button>
                   </div>
 
-                  <div className="item-details flex ml-11 flex items-center">
+                  <div className="item-details flex ml-11 items-center">
                     {item.thumbnail && (
                       <Image
                         className="w-36 h-24 rounded-lg object-cover border border-gray-200 mr-5 flex"
@@ -188,6 +211,14 @@ const Cart = () => {
                           : "bg-neutral-300"
                       } justify-center items-center gap-1 inline-flex hover:bg-blue-600 hover:text-white`}
                       disabled={isCartEmpty || !isAuthenticated}
+                      onClick={() =>
+                        displayCartSummary({
+                          user,
+                          cartItems,
+                          selectedCurrency,
+                          exchangeRates,
+                        })
+                      }
                     >
                       Place order
                     </button>
