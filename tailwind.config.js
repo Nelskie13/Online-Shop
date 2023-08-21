@@ -26,6 +26,7 @@ module.exports = {
       },
       gridTemplateColumns: {
         3: "repeat(3, 320px)",
+        1: "repeat(1, 300px)",
       },
     },
     screens: {

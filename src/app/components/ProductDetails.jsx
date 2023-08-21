@@ -84,18 +84,21 @@ function ProductDetails({ params }) {
         maximumFractionDigits: 2,
       }).format(convertedPrice);
     }
+    formattedPrice = formattedPrice.replace(/\.\d+$/, "");
 
     return formattedPrice;
   };
 
   return (
-    <div className="flex justify-center">
-      <div className="flex" style={{ width: "1200px" }}>
+    <div className="flex justify-center mobile:pt-[150px]">
+      <div
+        className="flex mobile:inline-block mobile:w-[320px]"
+        style={{ width: "1200px" }}
+      >
         <div
-          className="grid gap-4 ml-20 my-16"
+          className="grid gap-4 mobile:gap-[102px] ml-20 my-16 mobile:m-3 mobile:w-[300px] mobile:h-[191px]"
           style={{
             gridTemplateColumns: "500px",
-            gridTemplateRows: "320px",
           }}
         >
           <Image
@@ -104,14 +107,13 @@ function ProductDetails({ params }) {
             width={500}
             height={320}
             priority={true}
-            className="rounded-lg object-fill h-80 border border-gray-200"
+            className="rounded-lg object-fill h-80 border border-gray-200 mobile:w-[300px] mobile:h-[191px]"
           />
 
           <div
-            className="grid gap-10"
+            className="grid gap-10 mobile:gap-[11px] mobile:w-[93px] mobile:h-[93px] mobile:inline-flex"
             style={{
               gridTemplateColumns: "repeat(auto-fill, 140px)",
-              gridTemplateRows: "140px",
             }}
           >
             {images.slice(0, 3).map((image, index) => (
@@ -122,58 +124,55 @@ function ProductDetails({ params }) {
                 width={140}
                 height={140}
                 priority={true}
-                className="rounded-md object-cover border border-gray-200"
-                style={{
-                  height: "140px",
-                }}
+                className="rounded-md object-cover border h-[140px] border-gray-200 mobile:w-[93px] mobile:h-[93px]"
               />
             ))}
           </div>
         </div>
 
-        <div className="ml-10 my-16">
-          <div className="text-zinc-900 text-4xl font-bold leading-10 mb-2.5">
+        <div className="ml-10 my-16 mobile:mx-3 mobile:my-3 mobile:relative mobile:top-52 mobile:pb-20">
+          <div className="text-zinc-900 text-4xl mobile:text-2xl font-bold mobile:font-semibold leading-10 mb-2.5 mobile:relative mobile:bottom-2.5 mobile:overflow-x-auto mobile:whitespace-nowrap mobile:w-[300px]">
             {title}
           </div>
-          <div className="w-72 text-slate-500 text-base font-normal leading-normal mb-5">
+          <div className="w-72 text-slate-500 text-base mobile:text-sm font-normal leading-normal mobile:leading-tight mb-4 mobile:relative mobile:bottom-2.5 mobile:overflow-y-auto mobile:max-h-9 mobile:h-9 mobile:w-56">
             {description}
           </div>
 
-          <div className="flex mb-5">
+          <div className="flex mb-4 mobile:relative mobile:bottom-3.5">
             <RatingStar rating={rating} size={24} />
             <p className="text-center text-gray-400 text-base font-normal leading-normal ml-1">
               {rating}
             </p>
           </div>
 
-          <div className="flex items-center gap-2 mb-5">
-            <p className="text-zinc-900 text-4xl font-bold leading-10">
+          <div className="flex items-center gap-2 mb-5 mobile:mb-1 mobile:relative mobile:bottom-[348px]">
+            <p className="text-zinc-900 text-4xl mobile:text-2xl font-bold mobile:font-semibold leading-10 mobile:leading-normal">
               {convertPriceToCurrency(price, selectedCurrency)}
             </p>
-            <p className="text-slate-500 text-xs font-normal line-through leading-none">
+            <p className="text-slate-500 text-xs mobile:text-sm font-normal line-through leading-none mobile:leading-tight">
               {convertPriceToCurrency(
                 calculateOriginalPrice(price, discountPercentage),
                 selectedCurrency
               )}
             </p>
-            <div className="w-20 h-8 px-2.5 py-1 bg-orange-400 rounded-2xl gap-2.5 flex justify-center items-center">
-              <p className="text-white text-base font-normal leading-normal">
+            <div className="w-20 h-8 mobile:h-7 px-2.5 py-1 bg-orange-400 rounded-2xl gap-2.5 flex justify-center items-center">
+              <p className="text-white text-base mobile:text-sm font-normal leading-normal mobile:leading-tight">
                 -{discountPercentage}%
               </p>
             </div>
           </div>
 
-          <div className="w-80 h-24 flex-col gap-2.5 inline-flex text-slate-500 text-base font-normal leading-normal">
+          <div className="w-80 mobile:w-[300px] h-24 flex-col gap-2.5 inline-flex text-slate-500 text-base mobile:text-sm font-normal leading-normal mobile:relative mobile:bottom-16">
             <p>In stock: {stock}</p>
             <p>Brand: {brand}</p>
             <p>Category: {category}</p>
           </div>
 
-          <div className="mt-10">
+          <div className="mt-10 mobile:w-[300px] mobile:relative mobile:bottom-[485px]">
             <ButtonCart
               addToCartTitle={"Add to bag"}
               addToBagStatus={true}
-              className="w-36 h-14"
+              className="w-36 h-14 mobile:h-11 mobile:w-[300px]"
               textSize={"base"}
               height={24}
               width={24}

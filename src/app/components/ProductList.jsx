@@ -246,14 +246,15 @@ function ProductList() {
         maximumFractionDigits: 2,
       }).format(convertedPrice);
     }
+    formattedPrice = formattedPrice.replace(/\.\d+$/, "");
 
     return formattedPrice;
   };
 
   return (
-    <div className="flex justify-center ">
+    <div className="flex justify-center mobile:pt-24">
       <div style={{ width: "1200px" }}>
-        <section className="flex justify-center mt-14 mobile:hidden tablet:w-[800px]">
+        <section className="flex justify-center mt-14 mobile:hidden">
           <div className="flex justify-between" style={{ width: "1200px" }}>
             <p className="text-zinc-900 text-4xl font-bold leading-10 relative left-20">
               All goods
@@ -263,23 +264,23 @@ function ProductList() {
         </section>
 
         <div className="flex justify-center">
-          <main className="grid grid-cols-3 justify-center mb-10 mt-8 mobile:mt-16 gap-10 mobile:grid-cols-1 tablet:grid-cols-2 mobile:gap-5">
+          <main className="grid grid-cols-3 justify-center mb-10 mt-8 mobile:mt-16 gap-10 mobile:grid-cols-1 mobile:gap-5">
             {filteredProducts.slice(0, gridCount).map((product) => (
               <Link key={product.id} href={`/pages/product/${product.id}`}>
                 <div
                   key={product.id}
-                  className="w-80 h-84 rounded-md border border-gray-200 grid grid-rows-2 cursor-pointer mobile:w-[300px]"
+                  className="w-80 h-[341px] rounded-md border border-gray-200 grid grid-rows-2 cursor-pointer mobile:w-[300px]"
                 >
                   <Image
                     src={product.thumbnail}
                     width={320}
                     height={165}
                     alt={product.title}
-                    className="h-44 rounded-t-md object-cover"
+                    className="h-44 rounded-t-md object-cover mobile:w-[300px]"
                     priority={true}
                   />
 
-                  <div className="h-44 px-5 py-2.5 bg-slate-50 rounded-b-md hover:bg-cyan-100">
+                  <div className="h-[169px] px-5 py-2.5 bg-slate-50 rounded-b-md hover:bg-cyan-100 mobile:w-[298px]">
                     <div className="h-6 text-zinc-900 text-xl font-bold leading-tight">
                       <span className="line-clamp-1">{product.title}</span>
                     </div>
@@ -312,7 +313,7 @@ function ProductList() {
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-2 pt-3">
+                    <div className="flex items-center gap-2 pt-2.5">
                       <div className="flex">
                         <RatingStar rating={product.rating} size={12} />
                         <p

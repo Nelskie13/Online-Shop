@@ -68,7 +68,7 @@ const Cart = () => {
         maximumFractionDigits: 2,
       }).format(convertedPrice);
     }
-
+    formattedPrice = formattedPrice.replace(/\.\d+$/, "");
     return formattedPrice;
   };
 
@@ -109,10 +109,10 @@ const Cart = () => {
 
   return (
     <>
-      <div className="mx-20 my-16">
+      <div className="mx-20 my-16 mobile:m-0 mobile:pt-40">
         <div className="mb-10 flex justify-center">
-          <div style={{ width: "1040px" }}>
-            <p className="w-96 text-zinc-900 text-4xl font-bold leading-10 mb-5">
+          <div className="w-[1040px] mobile:w-[300px]">
+            <p className="w-96 text-zinc-900 text-4xl font-bold mobile:font-semibold leading-10 mobile:leading-normal mb-5 mobile:mb-2.5 mobile:w-[300px] mobile:text-2xl">
               Shopping Bag
             </p>
             <p className="text-slate-500 text-base font-normal leading-tight">
@@ -122,17 +122,10 @@ const Cart = () => {
         </div>
         <div className="container mx-auto grid gap-5">
           {cartItems.map((item) => (
-            <div className="cart-container flex justify-center">
-              <div
-                key={item.id}
-                className="cart-item p-5 bg-slate-50 rounded-md flex align-center"
-                style={{
-                  width: "1040px",
-                  height: "140px",
-                }}
-              >
-                <div className="item-container flex">
-                  <div className="item-remove flex align-center">
+            <div className="cart-container flex justify-center" key={item.id}>
+              <div className="cart-item p-5 mobile:p-2.5 bg-slate-50 rounded-md flex align-center w-[1040px] h-[140px] mobile:w-[300px] mobile:h-auto">
+                <div className="item-container flex mobile:grid-row">
+                  <div className="item-remove flex align-center mobile:order-2">
                     <button
                       onClick={() => removeItem(item.id)}
                       onMouseEnter={() => handleMouseEnter(item.id)}
@@ -147,10 +140,10 @@ const Cart = () => {
                     </button>
                   </div>
 
-                  <div className="item-details flex ml-11 items-center">
+                  <div className="item-details flex ml-11 items-center mobile:ml-0 mobile:order-1">
                     {item.thumbnail && (
                       <Image
-                        className="w-36 h-24 rounded-lg object-cover border border-gray-200 mr-5 flex"
+                        className="w-36 h-24 rounded-lg object-cover border border-gray-200 mr-5 mobile:mr-2.5 flex mobile:w-[53px] mobile:h-[53px]"
                         src={item.thumbnail}
                         alt={item.title}
                         width={140}
@@ -158,26 +151,31 @@ const Cart = () => {
                         priority={true}
                       />
                     )}
-                    <div className="item-info mr-40">
-                      <div className="Title w-72 text-slate-800 text-xl font-bold leading-relaxed mb-2.5">
-                        {item.title}
+                    <div className="item-info mobile:mr-10 mobile:grid flex mobile:w-10">
+                      <div className="mr-40">
+                        <div className="Title w-72 text-slate-800 text-xl mobile:text-sm font-bold mobile:font-semibold leading-relaxed mobile:leading-tight mb-2.5 mobile:w-[74px]">
+                          {item.title}
+                        </div>
+                        <div className="Brand/Category flex gap-2.5 mobile:hidden">
+                          <div className="w-auto h-auto px-2.5 py-1 rounded-3xl border border-neutral-300 justify-center items-center gap-1 inline-flex">
+                            <p className="text-center text-gray-400 text-xs font-normal leading-3">
+                              {item.brand}
+                            </p>
+                          </div>
+                          <div className="w-auto h-auto px-2.5 py-1 rounded-3xl border border-neutral-300 justify-center items-center gap-1 inline-flex">
+                            <p className="text-center text-gray-400 text-xs font-normal leading-3">
+                              {item.category}
+                            </p>
+                          </div>
+                        </div>
                       </div>
-                      <div className="Brand/Category flex gap-2.5">
-                        <div className="w-auto h-auto px-2.5 py-1 rounded-3xl border border-neutral-300 justify-center items-center gap-1 inline-flex">
-                          <p className="text-center text-gray-400 text-xs font-normal leading-3">
-                            {item.brand}
-                          </p>
-                        </div>
-                        <div className="w-auto h-auto px-2.5 py-1 rounded-3xl border border-neutral-300 justify-center items-center gap-1 inline-flex">
-                          <p className="text-center text-gray-400 text-xs font-normal leading-3">
-                            {item.category}
-                          </p>
-                        </div>
+                      <div className="flex items-center">
+                        <CartCounter product={item} />
                       </div>
                     </div>
-                    <CartCounter product={item} />
-                    <div className="item-price flex w-60 justify-end">
-                      <p className="text-zinc-900 text-xl font-semibold leading-7 flex items-center">
+
+                    <div className="item-price flex w-60 justify-end mobile:w-[120px] mobile:justify-center">
+                      <p className="text-zinc-900 text-xl font-semibold leading-7 flex items-center mobile:text-slate-500 mobile:text-sm mobile:font-normal mobile:leading-tight">
                         {convertPriceToCurrency(
                           item.price * (counters[item.id] || 1)
                         )}
@@ -188,19 +186,24 @@ const Cart = () => {
               </div>
             </div>
           ))}
-          <div className="TotalAmount flex justify-center">
-            <div className="Total flex " style={{ width: "1040px" }}>
-              <div className="Total container flex justify-between">
-                <p className="text-zinc-900 text-xl font-semibold leading-7">
-                  Total: {calculateTotalAmount()}
-                </p>
-                <div className="Buttons flex gap-5">
+        </div>
+        <div className="TotalAmount flex justify-center ">
+          <div className="Total flex mt-5 w-[1040px] mobile:mb-16">
+            <div className="Total container flex justify-between mobile:grid mobile:place-content-center">
+              <p className="text-zinc-900 text-xl mobile:text-sm font-semibold leading-7 mobile:leading-tight mobile:mb-3">
+                Total: {calculateTotalAmount()}
+              </p>
+
+              <div className="Buttons flex gap-5 mobile:gap-2.5 mobile:grid mobile:md:grid-row-3 ">
+                <div className="mobile:order-3">
                   <Link href="/">
-                    <button className="w-auto h-12 px-5 py-4 text-blue-600 rounded-3xl border border-blue-600 justify-center items-center gap-1 inline-flex hover:bg-blue-600 hover:text-white">
+                    <button className="w-auto h-12 px-5 py-4 mobile:w-[300px] text-blue-600 rounded-3xl border border-blue-600 justify-center items-center gap-1 inline-flex hover:bg-blue-600 hover:text-white">
                       Continue shopping
                     </button>
                   </Link>
+                </div>
 
+                <div className="mobile:order-2">
                   <Link href={"/pages/shopping-cart/place-order"}>
                     <button
                       className={`w-auto h-12 px-5 py-4 ${
@@ -209,7 +212,7 @@ const Cart = () => {
                         isAuthenticated
                           ? "border border-blue-600"
                           : "bg-neutral-300"
-                      } justify-center items-center gap-1 inline-flex hover:bg-blue-600 hover:text-white`}
+                      } justify-center items-center gap-1 inline-flex hover:bg-blue-600 hover:text-white mobile:w-[300px]`}
                       disabled={isCartEmpty || !isAuthenticated}
                       onClick={() =>
                         displayCartSummary({
@@ -223,21 +226,21 @@ const Cart = () => {
                       Place order
                     </button>
                   </Link>
-                  {!isAuthenticated && (
-                    <div className="w-42 flex items-center">
-                      <p className="text-slate-500 text-sm font-normal leading-tight">
-                        To place an order,{" "}
-                        <a
-                          onClick={loginWithRedirect}
-                          style={{ color: "blue" }}
-                          className="cursor-pointer"
-                        >
-                          sign in
-                        </a>
-                      </p>
-                    </div>
-                  )}
                 </div>
+                {!isAuthenticated && (
+                  <div className="w-42 flex items-center order-3 mobile:order-1">
+                    <p className="text-slate-500 text-sm font-normal leading-tight">
+                      To place an order,{" "}
+                      <a
+                        onClick={loginWithRedirect}
+                        style={{ color: "blue" }}
+                        className="cursor-pointer"
+                      >
+                        sign in
+                      </a>
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
           </div>
