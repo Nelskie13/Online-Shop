@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import ButtonCartWhite from "../assets/emptyCartWhite.svg";
-import ButtonCartBlue from "../assets/emptyCartBlue.svg";
-import Plus from "../assets/plus.svg";
-import Minus from "../assets/remove.svg";
+import ButtonCartWhite from "@/assets/emptyCartWhite.svg";
+import ButtonCartBlue from "@/assets/emptyCartBlue.svg";
+import Plus from "@/assets/plus.svg";
+import Minus from "@/assets/remove.svg";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart, removeFromCart } from "../Redux-store/CartSlice";
-import { increment, decrement, reset } from "../Redux-store/CounterSlice";
+import { addToCart, removeFromCart } from "@/Redux-store/CartSlice";
+import { increment, decrement, reset } from "@/Redux-store/CounterSlice";
 
 function ButtonCart({
   addToCartTitle,
@@ -48,7 +48,10 @@ function ButtonCart({
         id: id,
         isCounterActive: true,
       };
-      localStorage.setItem("counter-" + id, JSON.stringify(counterData));
+      if (typeof window !== "undefined") {
+        // Check if running in a browser environment
+        localStorage.setItem("counter-" + id, JSON.stringify(counterData));
+      }
     } else if (e.target.closest(".Counter")) {
       // Counter is clicked, do nothing
       return;
@@ -60,29 +63,35 @@ function ButtonCart({
       setIsActive(false);
 
       const id = product.id;
-      localStorage.removeItem("counter-" + id);
+      if (typeof window !== "undefined") {
+        // Check if running in a browser environment
+        localStorage.removeItem("counter-" + id);
+      }
     }
   };
 
   useEffect(() => {
     // Check if the counter is active in localStorage
     const id = product.id;
-    if (localStorage.getItem("counter-" + id)) {
-      const counterData = JSON.parse(localStorage.getItem("counter-" + id));
-      if (counterData.isCounterActive) {
-        setIsActive(true);
-        setShowCounter(true);
-        setIsHovered(true);
-      }
-      const storedItem = localStorage.getItem("counter-" + product.id);
-      if (storedItem && !cartItems.find((item) => item.id === product.id)) {
-        // Item was removed from cart
+    if (typeof window !== "undefined") {
+      // Check if running in a browser environment
+      if (localStorage.getItem("counter-" + id)) {
+        const counterData = JSON.parse(localStorage.getItem("counter-" + id));
+        if (counterData.isCounterActive) {
+          setIsActive(true);
+          setShowCounter(true);
+          setIsHovered(true);
+        }
+        const storedItem = localStorage.getItem("counter-" + product.id);
+        if (storedItem && !cartItems.find((item) => item.id === product.id)) {
+          // Item was removed from cart
 
-        setShowCounter(false);
-        setIsActive(false);
-        setIsHovered(false);
+          setShowCounter(false);
+          setIsActive(false);
+          setIsHovered(false);
 
-        localStorage.removeItem("counter-" + product.id);
+          localStorage.removeItem("counter-" + product.id);
+        }
       }
     }
   }, [product.id, cartItems]);

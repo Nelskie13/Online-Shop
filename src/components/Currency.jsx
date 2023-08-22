@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import Down from "../assets/down.svg";
+import Down from "@/assets/down.svg";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCurrencies } from "../Redux-store/CurrenciesSlice";
-import { setSelectedCurrency } from "../Redux-store/CurrenciesSlice";
+import { fetchCurrencies } from "@/Redux-store/CurrenciesSlice";
+import { setSelectedCurrency } from "@/Redux-store/CurrenciesSlice";
 
 function Currency() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedCurrencies, setSelectedCurrencies] = useState(
-    localStorage.getItem("selectedCurrency") || "USD" // Use 'USD' as the default if no value is found in localStorage
+    typeof window !== "undefined"
+      ? localStorage.getItem("selectedCurrency") || "USD"
+      : "USD"
   );
 
   const dispatch = useDispatch();
@@ -26,7 +28,9 @@ function Currency() {
     setSelectedCurrencies(currency);
     setIsDropdownOpen(false);
     dispatch(setSelectedCurrency(currency)); // Dispatch the action to update selectedCurrency in the Redux store
-    localStorage.setItem("selectedCurrency", currency); // Store selected currency in localStorage
+    if (typeof window !== "undefined") {
+      localStorage.setItem("selectedCurrency", currency); // Store selected currency in localStorage
+    }
   };
 
   return (

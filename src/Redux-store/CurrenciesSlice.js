@@ -1,14 +1,17 @@
+"use client";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const KEY = "adb84cf9e310bc9897f26528b48d92ef";
+const KEY = process.env.NEXT_PUBLIC_FIXER_API_KEY;
 
 // Action creator to load currencies from localStorage
 export const loadCurrenciesFromLocalStorage = createAsyncThunk(
   "currencies/loadFromLocalStorage",
   () => {
-    const savedData = localStorage.getItem("currenciesData");
-    return JSON.parse(savedData);
+    if (typeof window !== "undefined") {
+      const savedData = localStorage.getItem("currenciesData");
+      return JSON.parse(savedData);
+    }
   }
 );
 
@@ -19,7 +22,9 @@ export const fetchCurrencies = createAsyncThunk(
       `http://data.fixer.io/api/latest?access_key=${KEY}&symbols=USD,EUR,PHP,IDR,AUD&format=1`
     );
     // Save the fetched data to localStorage
-    localStorage.setItem("currenciesData", JSON.stringify(response.data));
+    if (typeof window !== "undefined") {
+      localStorage.setItem("currenciesData", JSON.stringify(response.data));
+    }
     return response.data;
   }
 );
@@ -30,7 +35,10 @@ const currenciesSlice = createSlice({
     data: {},
     loading: false,
     error: null,
-    selectedCurrency: localStorage.getItem("selectedCurrency") || "USD", // Add the selectedCurrency field to the initial state
+    selectedCurrency:
+      typeof window !== "undefined"
+        ? localStorage.getItem("selectedCurrency") || "USD"
+        : "USD",
   },
   reducers: {
     setSelectedCurrency: (state, action) => {
@@ -57,6 +65,6 @@ const currenciesSlice = createSlice({
   },
 });
 
-export const { setSelectedCurrency } = currenciesSlice.actions; // Export the action creator
+export const { setSelectedCurrency } = currenciesSlice.actions;
 
 export default currenciesSlice.reducer;

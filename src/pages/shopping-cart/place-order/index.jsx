@@ -1,5 +1,6 @@
+"use client";
 import React from "react";
-import Success from "@/app/components/Success";
+import Success from "@/components/Success";
 
 function page() {
   return <Success />;

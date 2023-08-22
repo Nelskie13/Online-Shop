@@ -5,18 +5,22 @@ import store from "./store";
 import { NextUIProvider } from "@nextui-org/react";
 import { Auth0Provider } from "@auth0/auth0-react";
 
-const domain = "online-shop-app.us.auth0.com";
-const clientId = "b3RVumk3fDz15pvcVdgS0jktx3jDF3py";
+const domain = process.env.NEXT_PUBLIC_AUTH0_ISSUER_BASE_URL;
+const clientId = process.env.NEXT_PUBLIC_AUTH0_CLIENT_ID;
 
 function Providers({ children }) {
+  const auth0Config = {
+    domain: domain,
+    clientId: clientId,
+    authorizationParams: {},
+  };
+
+  if (typeof window !== "undefined") {
+    auth0Config.authorizationParams.redirect_uri = window.location.origin;
+  }
+
   return (
-    <Auth0Provider
-      domain={domain}
-      clientId={clientId}
-      authorizationParams={{
-        redirect_uri: window.location.origin,
-      }}
-    >
+    <Auth0Provider {...auth0Config}>
       <Provider store={store}>
         <NextUIProvider>{children}</NextUIProvider>
       </Provider>

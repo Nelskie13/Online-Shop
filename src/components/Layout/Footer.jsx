@@ -1,5 +1,5 @@
 import React from "react";
-import SocialLogo from "../../assets/Social.svg";
+import SocialLogo from "@/assets/Social.svg";
 import Image from "next/image";
 
 function Footer() {

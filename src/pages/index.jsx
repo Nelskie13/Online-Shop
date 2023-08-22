@@ -1,6 +1,4 @@
-"use client";
-
-import ProductList from "./components/ProductList";
+import ProductList from "../components/ProductList";
 
 const HomePage = () => {
   return <ProductList />;

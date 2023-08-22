@@ -1,6 +1,10 @@
+"use client";
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = JSON.parse(localStorage.getItem("countersState")) || {};
+const initialState =
+  typeof window !== "undefined"
+    ? JSON.parse(localStorage.getItem("countersState")) || {}
+    : {};
 
 const countersSlice = createSlice({
   name: "counters",
@@ -9,27 +13,34 @@ const countersSlice = createSlice({
     increment: (state, action) => {
       const { id } = action.payload;
       state[id] = (state[id] || 1) + 1;
-      localStorage.setItem("countersState", JSON.stringify(state));
+      saveToLocalStorage(state);
     },
     decrement: (state, action) => {
       const { id } = action.payload;
       state[id] = (state[id] || 1) - 1;
-      localStorage.setItem("countersState", JSON.stringify(state));
+      saveToLocalStorage(state);
     },
     reset: (state, action) => {
       const { id } = action.payload;
       state[id] = 0;
-      localStorage.setItem("countersState", JSON.stringify(state));
+      saveToLocalStorage(state);
     },
     resetCounter: (state) => {
       Object.keys(state).forEach((key) => {
         state[key] = 0;
       });
-      localStorage.setItem("countersState", JSON.stringify(state));
+      saveToLocalStorage(state);
     },
   },
 });
 
+const saveToLocalStorage = (countersState) => {
+  if (typeof window !== "undefined") {
+    localStorage.setItem("countersState", JSON.stringify(countersState));
+  }
+};
+
 export const { increment, decrement, reset, resetCounter } =
   countersSlice.actions;
+
 export default countersSlice.reducer;

@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
-import StoreLogo from "../../assets/Logo.svg";
-import EmptyCartLogo from "../../assets/emptyCartGray.svg";
+import StoreLogo from "@/assets/Logo.svg";
+import EmptyCartLogo from "@/assets/emptyCartGray.svg";
 import Link from "next/link";
 import { Badge } from "@nextui-org/react";
 import { useDispatch, useSelector } from "react-redux";
@@ -56,7 +56,7 @@ function Header() {
                 </div>
 
                 <div className="indicator mt-2 w-10 flex justify-center mobile:relative mobile:text-blue-600 mobile:right-[270px] mobile:bottom-1">
-                  <Link href="/pages/shopping-cart">
+                  <Link href="/shopping-cart">
                     <button className="cart-button mobile:border mobile:border-blue-600 mobile:rounded-full mobile:w-10 mobile:h-10">
                       <Badge
                         content={totalCounter}

@@ -1,13 +1,13 @@
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProductList } from "../Redux-store/ProductListSlice";
+import { fetchProductList } from "@/Redux-store/ProductListSlice";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import Shop from "../assets/shop.svg";
+import Shop from "@/assets/shop.svg";
 import RatingStar from "./RatingStar";
-import DownLogo from "../assets/down.svg";
-import DownWhiteLogo from "../assets/downWhite.svg";
+import DownLogo from "@/assets/down.svg";
+import DownWhiteLogo from "@/assets/downWhite.svg";
 import Link from "next/link";
-import ButtonCart from "./ButtonCart";
+import ButtonCart from "./Icons/ButtonCart";
 
 function ProductList() {
   const dispatch = useDispatch();
@@ -266,7 +266,7 @@ function ProductList() {
         <div className="flex justify-center">
           <main className="grid grid-cols-3 justify-center mb-10 mt-8 mobile:mt-16 gap-10 mobile:grid-cols-1 mobile:gap-5">
             {filteredProducts.slice(0, gridCount).map((product) => (
-              <Link key={product.id} href={`/pages/product/${product.id}`}>
+              <Link key={product.id} href={`/product/${product.id}`}>
                 <div
                   key={product.id}
                   className="w-80 h-[341px] rounded-md border border-gray-200 grid grid-rows-2 cursor-pointer mobile:w-[300px]"

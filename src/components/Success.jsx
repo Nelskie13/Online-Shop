@@ -4,9 +4,9 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
 import Link from "next/link";
-import PlaceOrder from "../assets/PlaceOrder.svg";
-import { resetCart } from "../Redux-store/CartSlice";
-import { resetCounter } from "../Redux-store/CounterSlice";
+import PlaceOrder from "@/assets/PlaceOrder.svg";
+import { resetCart } from "@/Redux-store/CartSlice";
+import { resetCounter } from "@/Redux-store/CounterSlice";
 
 function Success() {
   const cartItems = useSelector((state) => state.cart.cartItems);
@@ -80,7 +80,7 @@ function Success() {
         </div>
 
         <div className="flex justify-center mobile:relative mobile:bottom-32">
-          <figure className="SuccesPic mt-24 mobile:mt-0 ml-20 mobile:my-0 mobile:ml-0 mobile:w-[176px] mobile:h-[176px] mobile:absolute mobile:bottom-0">
+          <figure className="SuccesPic mt-24 mb-14 mobile:mt-0 ml-20 mobile:my-0 mobile:ml-0 mobile:w-[176px] mobile:h-[176px] mobile:absolute mobile:bottom-0">
             <Image src={PlaceOrder} alt="Logo" width={360} height={360} />
           </figure>
         </div>

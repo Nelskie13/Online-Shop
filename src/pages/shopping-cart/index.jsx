@@ -1,4 +1,5 @@
-import Cart from "@/app/components/Cart";
+"use client";
+import Cart from "@/components/Cart";
 import React from "react";
 
 function page() {

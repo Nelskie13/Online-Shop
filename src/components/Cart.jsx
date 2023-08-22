@@ -2,11 +2,11 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Image from "next/image";
-import { removeFromCart } from "../Redux-store/CartSlice";
-import { reset } from "../Redux-store/CounterSlice";
-import Cross from "../assets/cross.svg";
-import CrossBlue from "../assets/crossBlue.svg";
-import CartCounter from "./CartCounter";
+import { removeFromCart } from "@/Redux-store/CartSlice";
+import { reset } from "@/Redux-store/CounterSlice";
+import Cross from "@/assets/cross.svg";
+import CrossBlue from "@/assets/crossBlue.svg";
+import CartCounter from "./Icons/CartCounter";
 import Link from "next/link";
 import { useAuth0 } from "@auth0/auth0-react";
 
@@ -204,7 +204,7 @@ const Cart = () => {
                 </div>
 
                 <div className="mobile:order-2">
-                  <Link href={"/pages/shopping-cart/place-order"}>
+                  <Link href="/shopping-cart/place-order">
                     <button
                       className={`w-auto h-12 px-5 py-4 ${
                         !isAuthenticated ? "text-white" : "text-blue-600"

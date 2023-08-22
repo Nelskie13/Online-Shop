@@ -1,12 +1,14 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchProductDetails } from "../Redux-store/ProductDetailsSlice";
+import { fetchProductDetails } from "@/Redux-store/ProductDetailsSlice";
 import Image from "next/image";
 import RatingStar from "./RatingStar";
-import ButtonCart from "./ButtonCart";
+import ButtonCart from "./Icons/ButtonCart";
+import { useRouter } from "next/router"; // Import the useRouter hook
 
-function ProductDetails({ params }) {
-  const { id } = params;
+function ProductDetails() {
+  const router = useRouter();
+  const { id } = router.query;
   const dispatch = useDispatch();
   const { data, loading, error } = useSelector((state) => state.productDetails);
   const selectedCurrency = useSelector(
