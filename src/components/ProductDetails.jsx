@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchProductDetails } from "@/Redux-store/ProductDetailsSlice";
 import Image from "next/image";
-import RatingStar from "./Icons/RatingStar";
+import RatingStar from "./RatingStar";
 import ButtonCart from "./Icons/ButtonCart";
 import { useRouter } from "next/router"; // Import the useRouter hook
 
