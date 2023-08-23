@@ -19,8 +19,10 @@ export const metadata = {
 export default function App({ Component, pageProps }) {
   return (
     <div className={inter.className}>
+      <Head>
+        <title>{metadata.title}</title>
+      </Head>
       <Providers>
-        <Head>{metadata.title}</Head>
         <Header />
         <Component {...pageProps} />
         <Footer />
