@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/Redux-store/CurrenciesSlice.js(.*)",
+      "destination": "http://data.fixer.io/api/$1"
+    }
+  ]
+}
