@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const KEY = process.env.NEXT_PUBLIC_FIXER_API_KEY;
+const KEY = "adb84cf9e310bc9897f26528b48d92ef";
 
 // Action creator to load currencies from localStorage
 export const loadCurrenciesFromLocalStorage = createAsyncThunk(
