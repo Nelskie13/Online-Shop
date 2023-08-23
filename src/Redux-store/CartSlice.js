@@ -1,8 +1,27 @@
-"use client";
 import { createSlice } from "@reduxjs/toolkit";
 
+const saveToLocalStorage = (cartItems) => {
+  if (typeof window !== "undefined") {
+    localStorage.setItem("cartData", JSON.stringify(cartItems));
+  }
+};
+
+const removeFromLocalStorage = () => {
+  if (typeof window !== "undefined") {
+    localStorage.removeItem("cartData");
+  }
+};
+
+const loadCartItemsFromLocalStorage = () => {
+  if (typeof window !== "undefined") {
+    const cartData = localStorage.getItem("cartData");
+    return cartData ? JSON.parse(cartData) : [];
+  }
+  return [];
+};
+
 const initialState = {
-  cartItems: [],
+  cartItems: loadCartItemsFromLocalStorage(), // Load cart items from localStorage
 };
 
 const cartSlice = createSlice({
@@ -27,18 +46,6 @@ const cartSlice = createSlice({
     },
   },
 });
-
-const saveToLocalStorage = (cartItems) => {
-  if (typeof window !== "undefined") {
-    localStorage.setItem("cartData", JSON.stringify(cartItems));
-  }
-};
-
-const removeFromLocalStorage = () => {
-  if (typeof window !== "undefined") {
-    localStorage.removeItem("cartData");
-  }
-};
 
 export const { addToCart, removeFromCart, resetCart } = cartSlice.actions;
 

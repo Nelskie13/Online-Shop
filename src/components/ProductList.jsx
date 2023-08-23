@@ -3,7 +3,7 @@ import { fetchProductList } from "@/Redux-store/ProductListSlice";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Shop from "@/assets/shop.svg";
-import RatingStar from "./RatingStar";
+import RatingStar from "./Icons/RatingStar";
 import DownLogo from "@/assets/down.svg";
 import DownWhiteLogo from "@/assets/downWhite.svg";
 import Link from "next/link";

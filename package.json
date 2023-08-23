@@ -24,6 +24,7 @@
     "tailwindcss": "3.3.3"
   },
   "devDependencies": {
+    "eslint": "^8.47.0",
     "tailwindcss-font-inter": "^3.0.1"
   }
 }

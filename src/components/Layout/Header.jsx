@@ -1,4 +1,3 @@
-"use client";
 import Image from "next/image";
 import StoreLogo from "@/assets/Logo.svg";
 import EmptyCartLogo from "@/assets/emptyCartGray.svg";
