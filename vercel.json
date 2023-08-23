@@ -5,5 +5,11 @@
       "destination": "http://data.fixer.io/api/latest?access_key=a39241fba37bf2c76a42bc15a4fb5149&symbols=USD,EUR,PHP,IDR,AUD&format=1"
     }
   ],
-  "redirects": false
+  "redirects": [
+    {
+      "source": "/Redux-store/CurrenciesSlice.js",
+      "destination": "http://data.fixer.io/api/latest?access_key=a39241fba37bf2c76a42bc15a4fb5149&symbols=USD,EUR,PHP,IDR,AUD&format=1",
+      "permanent": true
+    }
+  ]
 }
