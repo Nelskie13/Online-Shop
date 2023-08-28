@@ -2,7 +2,7 @@ import React from "react";
 import Plus from "@/assets/plus.svg";
 import Minus from "@/assets/remove.svg";
 import { useDispatch, useSelector } from "react-redux";
-import { increment, decrement } from "@/Redux-store/CounterSlice";
+import { increment, decrement } from "../../Redux-store/CounterSlice";
 import Image from "next/image";
 
 function CartCounter({ product }) {

@@ -5,8 +5,8 @@ import Plus from "@/assets/plus.svg";
 import Minus from "@/assets/remove.svg";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart, removeFromCart } from "@/Redux-store/CartSlice";
-import { increment, decrement, reset } from "@/Redux-store/CounterSlice";
+import { addToCart, removeFromCart } from "../../Redux-store/CartSlice";
+import { increment, decrement, reset } from "../../Redux-store/CounterSlice";
 
 function ButtonCart({
   addToCartTitle,

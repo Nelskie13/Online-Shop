@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Image from "next/image";
-import { removeFromCart } from "@/Redux-store/CartSlice";
-import { reset } from "@/Redux-store/CounterSlice";
+import { removeFromCart } from "../Redux-store/CartSlice";
+import { reset } from "../Redux-store/CounterSlice";
 import Cross from "@/assets/cross.svg";
 import CrossBlue from "@/assets/crossBlue.svg";
 import CartCounter from "./Icons/CartCounter";

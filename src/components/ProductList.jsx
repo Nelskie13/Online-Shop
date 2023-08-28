@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProductList } from "@/Redux-store/ProductListSlice";
+import { fetchProductList } from "../Redux-store/ProductListSlice";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Shop from "@/assets/shop.svg";
@@ -253,9 +253,9 @@ function ProductList() {
 
   return (
     <div className="flex justify-center mobile:pt-24">
-      <div style={{ width: "1200px" }}>
+      <div className="w-[1200px]">
         <section className="flex justify-center mt-14 mobile:hidden">
-          <div className="flex justify-between" style={{ width: "1200px" }}>
+          <div className="flex justify-between w-[1200px]">
             <p className="text-zinc-900 text-4xl font-bold leading-10 relative left-20">
               All goods
             </p>
@@ -263,89 +263,84 @@ function ProductList() {
           </div>
         </section>
 
-        <div className="flex justify-center">
-          <main className="grid grid-cols-3 justify-center mb-10 mt-8 mobile:mt-16 gap-10 mobile:grid-cols-1 mobile:gap-5">
-            {filteredProducts.slice(0, gridCount).map((product) => (
-              <Link key={product.id} href={`/product/${product.id}`}>
-                <div
-                  key={product.id}
-                  className="w-80 h-[341px] rounded-md border border-gray-200 grid grid-rows-2 cursor-pointer mobile:w-[300px]"
-                >
-                  <Image
-                    src={product.thumbnail}
-                    width={320}
-                    height={165}
-                    alt={product.title}
-                    className="h-44 rounded-t-md object-cover mobile:w-[300px]"
-                    priority={true}
-                  />
+        <main className="grid grid-cols-3 justify-center mb-10 mt-8 mobile:mt-16 gap-10 mobile:grid-cols-1 mobile:gap-5">
+          {filteredProducts.slice(0, gridCount).map((product) => (
+            <Link key={product.id} href={`/product/${product.id}`}>
+              <div
+                key={product.id}
+                className="w-80 h-[341px] rounded-md border border-gray-200 grid grid-rows-2 cursor-pointer mobile:w-[300px]"
+              >
+                <Image
+                  src={product.thumbnail}
+                  width={320}
+                  height={165}
+                  alt={product.title}
+                  className="h-44 rounded-t-md object-cover mobile:w-[300px]"
+                  priority={true}
+                />
 
-                  <div className="h-[169px] px-5 py-2.5 bg-slate-50 rounded-b-md hover:bg-cyan-100 mobile:w-[298px]">
-                    <div className="h-6 text-zinc-900 text-xl font-bold leading-tight">
-                      <span className="line-clamp-1">{product.title}</span>
-                    </div>
-                    <div className=" h-10 text-slate-500 text-xs font-normal leading-tight">
-                      <span className="line-clamp-2 my-2">
-                        {product.description}
-                      </span>
-                    </div>
+                <div className="h-[169px] px-5 py-2.5 bg-slate-50 rounded-b-md hover:bg-cyan-100 mobile:w-[298px]">
+                  <div className="h-6 text-zinc-900 text-xl font-bold leading-tight">
+                    <span className="line-clamp-1">{product.title}</span>
+                  </div>
+                  <div className=" h-10 text-slate-500 text-xs font-normal leading-tight">
+                    <span className="line-clamp-2 my-2">
+                      {product.description}
+                    </span>
+                  </div>
 
-                    <div className="flex items-center gap-2 border-b border-gray-400 pb-2">
-                      <p className="text-zinc-900 text-xl font-semibold leading-7">
-                        {convertPriceToCurrency(
+                  <div className="flex items-center gap-2 border-b border-gray-400 pb-2">
+                    <p className="text-zinc-900 text-xl font-semibold leading-7">
+                      {convertPriceToCurrency(product.price, selectedCurrency)}
+                    </p>
+                    <p className="text-slate-500 text-xs font-normal line-through leading-none">
+                      {convertPriceToCurrency(
+                        calculateOriginalPrice(
                           product.price,
-                          selectedCurrency
-                        )}
+                          product.discountPercentage
+                        ),
+                        selectedCurrency
+                      )}
+                    </p>
+                    <div className="w-16 h-6 px-2.5 py-1 bg-orange-400 rounded-2xl gap-2.5 flex justify-center items-center">
+                      <p className="text-white text-xs font-semibold leading-none">
+                        -{product.discountPercentage}%
                       </p>
-                      <p className="text-slate-500 text-xs font-normal line-through leading-none">
-                        {convertPriceToCurrency(
-                          calculateOriginalPrice(
-                            product.price,
-                            product.discountPercentage
-                          ),
-                          selectedCurrency
-                        )}
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2 pt-2.5">
+                    <div className="flex">
+                      <RatingStar rating={product.rating} size={12} />
+                      <p
+                        className="text-center text-gray-400 text-xs font-normal leading-3 "
+                        style={{ marginTop: "1px", marginLeft: "4px" }}
+                      >
+                        {product.rating}
                       </p>
-                      <div className="w-16 h-6 px-2.5 py-1 bg-orange-400 rounded-2xl gap-2.5 flex justify-center items-center">
-                        <p className="text-white text-xs font-semibold leading-none">
-                          -{product.discountPercentage}%
-                        </p>
-                      </div>
                     </div>
 
-                    <div className="flex items-center gap-2 pt-2.5">
-                      <div className="flex">
-                        <RatingStar rating={product.rating} size={12} />
-                        <p
-                          className="text-center text-gray-400 text-xs font-normal leading-3 "
-                          style={{ marginTop: "1px", marginLeft: "4px" }}
-                        >
-                          {product.rating}
-                        </p>
-                      </div>
+                    <div className="flex">
+                      <Image src={Shop} alt="Logo" />
+                      <p className="text-gray-400 text-xs font-normal leading-3 flex items-center">
+                        {product.stock}
+                      </p>
+                    </div>
 
-                      <div className="flex">
-                        <Image src={Shop} alt="Logo" />
-                        <p className="text-gray-400 text-xs font-normal leading-3 flex items-center">
-                          {product.stock}
-                        </p>
-                      </div>
-
-                      <div className="ButtonCart flex ml-auto">
-                        <ButtonCart
-                          height="18"
-                          width="18"
-                          product={product}
-                          textSize={"xs"}
-                        />
-                      </div>
+                    <div className="ButtonCart flex ml-auto">
+                      <ButtonCart
+                        height="18"
+                        width="18"
+                        product={product}
+                        textSize={"xs"}
+                      />
                     </div>
                   </div>
                 </div>
-              </Link>
-            ))}
-          </main>
-        </div>
+              </div>
+            </Link>
+          ))}
+        </main>
 
         <section className="flex justify-center mb-14">
           <button

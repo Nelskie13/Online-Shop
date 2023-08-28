@@ -22,10 +22,7 @@ function Header() {
 
   return (
     <div className="flex bg-slate-800 justify-center mobile:fixed">
-      <header
-        className="navbar h-20 mobile:h-24 bg-slate-800 flex items-center justify-between mobile:items-end mobile:fixed"
-        style={{ width: "1200px" }}
-      >
+      <header className="Navbar w-[1200px] h-20 mobile:h-24 bg-slate-800 flex items-center justify-between mobile:items-end mobile:fixed">
         <Link href="/">
           <button className="logo-btn relative left-20 mobile:left-2.5 mobile:mb-5 mobile:top-16 mobile:fixed">
             <Image src={StoreLogo} alt="Logo" />

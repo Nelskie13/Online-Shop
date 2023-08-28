@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
 import Link from "next/link";
 import PlaceOrder from "@/assets/PlaceOrder.svg";
-import { resetCart } from "@/Redux-store/CartSlice";
-import { resetCounter } from "@/Redux-store/CounterSlice";
+import { resetCart } from "../Redux-store/CartSlice";
+import { resetCounter } from "../Redux-store/CounterSlice";
 
 function Success() {
   const cartItems = useSelector((state) => state.cart.cartItems);

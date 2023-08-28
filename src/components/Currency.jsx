@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Down from "@/assets/down.svg";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCurrencies } from "@/Redux-store/CurrenciesSlice";
-import { setSelectedCurrency } from "@/Redux-store/CurrenciesSlice";
+import { fetchCurrencies } from "../Redux-store/CurrenciesSlice";
+import { setSelectedCurrency } from "../Redux-store/CurrenciesSlice";
 
 function Currency() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);

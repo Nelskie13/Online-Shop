@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const currencies = "/api/data";
+const currencies = "/api/CurrenciesAPI";
 
 // Action creator to load currencies from localStorage
 export const loadCurrenciesFromLocalStorage = createAsyncThunk(

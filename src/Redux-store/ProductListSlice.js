@@ -1,13 +1,13 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
+const products = "/api/ProductListAPI";
+
 export const fetchProductList = createAsyncThunk(
   "productList/fetchProductList",
   async () => {
-    const response = await axios.get(
-      "https://dummyjson.com/products?limit=100"
-    );
-    return response.data.products;
+    const response = await axios.get(products);
+    return response.data;
   }
 );
 
