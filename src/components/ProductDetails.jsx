@@ -92,13 +92,10 @@ function ProductDetails() {
   };
 
   return (
-    <div className="flex justify-center mobile:pt-[150px]">
-      <div
-        className="flex mobile:inline-block mobile:w-[320px]"
-        style={{ width: "1200px" }}
-      >
+    <div className="flex justify-center mobile:pt-24 tablet:pt-0 tablet:pb-8 laptop:mb-8">
+      <div className="flex tablet:inline-flex tablet:justify-center mobile:inline-block tablet:w-[1200px] mobile:w-[320px]">
         <div
-          className="grid gap-4 mobile:gap-[102px] ml-20 my-16 mobile:m-3 mobile:w-[300px] mobile:h-[191px]"
+          className="grid tablet:gap-4 mobile:gap-[102px] tablet:ml-20 tablet:my-16 mobile:m-3 mobile:w-[300px] mobile:h-[191px] laptop:w-[500px] laptop:h-80"
           style={{
             gridTemplateColumns: "500px",
           }}
@@ -109,11 +106,11 @@ function ProductDetails() {
             width={500}
             height={320}
             priority={true}
-            className="rounded-lg object-fill h-80 border border-gray-200 mobile:w-[300px] mobile:h-[191px]"
+            className="rounded-lg object-fill h-80 border border-gray-200 mobile:w-[300px] mobile:h-[191px] laptop:w-[500px] laptop:h-80"
           />
 
           <div
-            className="grid gap-10 mobile:gap-[11px] mobile:w-[93px] mobile:h-[93px] mobile:inline-flex"
+            className="grid laptop:gap-10 mobile:gap-[11px] mobile:w-[93px] mobile:h-[93px] laptop:w-[140px] laptop:h-[140px] mobile:inline-flex"
             style={{
               gridTemplateColumns: "repeat(auto-fill, 140px)",
             }}
@@ -126,17 +123,17 @@ function ProductDetails() {
                 width={140}
                 height={140}
                 priority={true}
-                className="rounded-md object-cover border h-[140px] border-gray-200 mobile:w-[93px] mobile:h-[93px]"
+                className="rounded-md object-cover border h-[140px] border-gray-200 mobile:w-[93px] mobile:h-[93px] laptop:w-[140px] laptop:h-[140px]"
               />
             ))}
           </div>
         </div>
 
-        <div className="ml-10 my-16 mobile:mx-3 mobile:my-3 mobile:relative mobile:top-52 mobile:pb-20">
-          <div className="text-zinc-900 text-4xl mobile:text-2xl font-bold mobile:font-semibold leading-10 mb-2.5 mobile:relative mobile:bottom-2.5 mobile:overflow-x-auto mobile:whitespace-nowrap mobile:w-[300px]">
+        <div className="tablet:ml-10 tablet:my-16 mobile:mx-3 mobile:my-3 mobile:relative mobile:top-52 tablet:top-0 mobile:pb-20 tablet:pb-0">
+          <div className="text-zinc-900 tablet:text-3xl mobile:text-2xl tablet:font-bold mobile:font-semibold leading-10 mb-2.5 mobile:relative mobile:bottom-2.5 tablet:bottom-0 mobile:overflow-x-auto tablet:title-no-overflow-x mobile:whitespace-nowrap tablet:whitespace-normal mobile:w-[300px] tablet:h-auto">
             {title}
           </div>
-          <div className="w-72 text-slate-500 text-base mobile:text-sm font-normal leading-normal mobile:leading-tight mb-4 mobile:relative mobile:bottom-2.5 mobile:overflow-y-auto mobile:max-h-9 mobile:h-9 mobile:w-56">
+          <div className="tablet:w-72 text-slate-500 tablet:text-base mobile:text-sm font-normal leading-normal mobile:leading-tight mb-4 mobile:relative mobile:bottom-2.5 mobile:overflow-y-auto tablet:text-no-overflow-y mobile:h-9 tablet:h-auto mobile:w-full">
             {description}
           </div>
 
@@ -147,7 +144,7 @@ function ProductDetails() {
             </p>
           </div>
 
-          <div className="flex items-center gap-2 mb-5 mobile:mb-1 mobile:relative mobile:bottom-[348px]">
+          <div className="flex items-center gap-2 mb-5 mobile:mb-1 mobile:relative mobile:bottom-[348px] tablet:bottom-0">
             <p className="text-zinc-900 text-4xl mobile:text-2xl font-bold mobile:font-semibold leading-10 mobile:leading-normal">
               {convertPriceToCurrency(price, selectedCurrency)}
             </p>
@@ -164,17 +161,17 @@ function ProductDetails() {
             </div>
           </div>
 
-          <div className="w-80 mobile:w-[300px] h-24 flex-col gap-2.5 inline-flex text-slate-500 text-base mobile:text-sm font-normal leading-normal mobile:relative mobile:bottom-16">
+          <div className="tablet:w-80 mobile:w-[300px] h-24 flex-col gap-2.5 inline-flex text-slate-500 tablet:text-base mobile:text-sm font-normal leading-normal mobile:relative mobile:bottom-16 tablet:bottom-0">
             <p>In stock: {stock}</p>
             <p>Brand: {brand}</p>
             <p>Category: {category}</p>
           </div>
 
-          <div className="mt-10 mobile:w-[300px] mobile:relative mobile:bottom-[485px]">
+          <div className="mt-10 mobile:w-[300px] mobile:relative mobile:bottom-[485px] tablet:bottom-0">
             <ButtonCart
               addToCartTitle={"Add to bag"}
               addToBagStatus={true}
-              className="w-36 h-14 mobile:h-11 mobile:w-[300px]"
+              className="tablet:w-36 tablet:h-14 mobile:h-11 mobile:w-[300px]"
               textSize={"base"}
               height={24}
               width={24}

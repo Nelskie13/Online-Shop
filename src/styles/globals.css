@@ -30,3 +30,9 @@
 .disable-animation {
   animation: none !important;
 }
+.title-no-overflow-x {
+  overflow-x: visible !important;
+}
+.text-no-overflow-y {
+  overflow-y: visible !important;
+}

@@ -17,14 +17,14 @@ function CartCounter({ product }) {
 
   return (
     <>
-      <section className="Counter flex items-center gap-2.5 mobile:gap-2">
+      <section className="Counter flex items-center laptop:gap-2.5 mobile:gap-2">
         <button
           className="hover:bg-gray-200 mobile:bg-gray-200 mobile:rounded-md mobile:h-5 mobile:w-5"
           onClick={incrementCounter}
         >
           <Image src={Plus} alt="Increment" height={24} width={24} />
         </button>
-        <p className="text-center text-zinc-900 text-xl mobile:text-sm font-normal leading-7">
+        <p className="text-center text-zinc-900 laptop:text-xl mobile:text-sm font-normal leading-7">
           {counter}
         </p>
         <button

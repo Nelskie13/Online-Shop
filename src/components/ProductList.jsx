@@ -101,7 +101,7 @@ function ProductList() {
 
     return (
       <div className="flex gap-3">
-        <div className="relative right-20">
+        <>
           <button
             ref={buttonRef1}
             className={`w-28 h-12 px-5 py-3 rounded-3xl border border-blue-600 justify-center items-center gap-1 inline-flex ${
@@ -151,9 +151,9 @@ function ProductList() {
               </button>
             </div>
           )}
-        </div>
+        </>
 
-        <div className="relative right-20">
+        <>
           <button
             ref={buttonRef2}
             className={`w-36 h-12 px-5 py-3 rounded-3xl border border-blue-600 justify-center items-center gap-1 inline-flex ${
@@ -205,7 +205,7 @@ function ProductList() {
               </button>
             </div>
           )}
-        </div>
+        </>
       </div>
     );
   };
@@ -252,34 +252,34 @@ function ProductList() {
   };
 
   return (
-    <div className="flex justify-center mobile:pt-24">
-      <div className="w-[1200px]">
-        <section className="flex justify-center mt-14 mobile:hidden">
-          <div className="flex justify-between w-[1200px]">
-            <p className="text-zinc-900 text-4xl font-bold leading-10 relative left-20">
+    <div className="flex justify-center mobile:pt-10 tablet:pt-0">
+      <div className="inline-block">
+        <section className="flex justify-center mt-14 mobile:hidden tablet:block">
+          <div className="flex justify-between w-auto">
+            <p className="text-zinc-900 text-4xl font-bold leading-10">
               All goods
             </p>
             <BrandCategoryFiltering />
           </div>
         </section>
 
-        <main className="grid grid-cols-3 justify-center mb-10 mt-8 mobile:mt-16 gap-10 mobile:grid-cols-1 mobile:gap-5">
+        <main className="grid justify-center mb-10 mobile:mt-16 tablet:mt-8 mobile:gap-5 tablet:gap-10 mobile:grid-cols-1 tablet:grid-cols-2 laptop:grid-cols-3">
           {filteredProducts.slice(0, gridCount).map((product) => (
             <Link key={product.id} href={`/product/${product.id}`}>
               <div
                 key={product.id}
-                className="w-80 h-[341px] rounded-md border border-gray-200 grid grid-rows-2 cursor-pointer mobile:w-[300px]"
+                className="h-[341px] rounded-md border border-gray-200 grid grid-rows-2 cursor-pointer mobile:w-[300px] tablet:w-80 laptop:w-80"
               >
                 <Image
                   src={product.thumbnail}
                   width={320}
                   height={165}
                   alt={product.title}
-                  className="h-44 rounded-t-md object-cover mobile:w-[300px]"
+                  className="h-44 rounded-t-md object-cover mobile:w-full tablet:w-full"
                   priority={true}
                 />
 
-                <div className="h-[169px] px-5 py-2.5 bg-slate-50 rounded-b-md hover:bg-cyan-100 mobile:w-[298px]">
+                <div className="h-[169px] px-5 py-2.5 bg-slate-50 rounded-b-md hover:bg-cyan-100 mobile:w-full tablet:w-full laptop:w-full">
                   <div className="h-6 text-zinc-900 text-xl font-bold leading-tight">
                     <span className="line-clamp-1">{product.title}</span>
                   </div>
@@ -344,7 +344,7 @@ function ProductList() {
 
         <section className="flex justify-center mb-14">
           <button
-            className="w-30 h-12 px-5 py-4 bg-blue-600 rounded-3xl border border-blue-600 justify-center items-center gap-1 inline-flex mobile:w-[300px]"
+            className="h-12 px-5 py-4 bg-blue-600 rounded-3xl border border-blue-600 justify-center items-center gap-1 inline-flex mobile:w-[300px] tablet:w-32"
             onClick={() => setGridCount((prev) => prev + 6)}
             disabled={gridCount >= totalProducts}
           >
