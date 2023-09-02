@@ -126,11 +126,8 @@ function ProductList() {
           </button>
 
           {isDropdownOpen1 && (
-            <div className="dropdown absolute top-full left-0 bg-white shadow-md p-2 mt-2 rounded-lg">
-              <ul
-                className="py-2 space-y-2 cursor-pointer"
-                style={{ maxHeight: "200px", overflowY: "auto" }}
-              >
+            <div className="dropdown absolute top-[190px] bg-white shadow-md p-2 mt-2 rounded-lg">
+              <ul className="py-2 space-y-2 cursor-pointer w-36 overflow-y-auto max-h-52">
                 {[
                   ...new Set(productListData.map((product) => product.brand)),
                 ].map((brand) => (
@@ -178,11 +175,8 @@ function ProductList() {
           </button>
 
           {isDropdownOpen2 && (
-            <div className="dropdown absolute top-full left-0 bg-white shadow-md p-2 mt-2 rounded-lg">
-              <ul
-                className="py-2 space-y-2 cursor-pointer"
-                style={{ maxHeight: "200px", overflowY: "auto" }}
-              >
+            <div className="dropdown absolute top-[190px] bg-white shadow-md p-2 mt-2 rounded-lg">
+              <ul className="py-2 space-y-2 cursor-pointer overflow-y-auto max-h-52 w-36">
                 {[
                   ...new Set(
                     productListData.map((product) => product.category)
