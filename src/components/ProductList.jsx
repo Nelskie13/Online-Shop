@@ -8,11 +8,12 @@ import DownLogo from "@/assets/down.svg";
 import DownWhiteLogo from "@/assets/downWhite.svg";
 import Link from "next/link";
 import ButtonCart from "./Icons/ButtonCart";
+import { Spinner } from "@nextui-org/react";
 
 function ProductList() {
   const dispatch = useDispatch();
-  const productListData = useSelector((state) => state.productList.data);
-  const totalProducts = productListData.length;
+  const { data, loading, error } = useSelector((state) => state.productList);
+  const totalProducts = data.length;
   const [gridCount, setGridCount] = useState(6);
   const [isDropdownOpen1, setIsDropdownOpen1] = useState(false);
   const [isDropdownOpen2, setIsDropdownOpen2] = useState(false);
@@ -50,7 +51,36 @@ function ProductList() {
     };
   }, [isDropdownOpen1, isDropdownOpen2]);
 
-  const filteredProducts = productListData.filter((product) => {
+  // Handle loading and error states
+  if (loading) {
+    return (
+      <div className="flex justify-center h-[75vh]">
+        <div className="flex items-center">
+          <Spinner
+            label="Loading..."
+            color="primary"
+            labelColor="primary"
+            size="lg"
+          />
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex justify-center h-[75vh]">
+        <div className="flex items-center">
+          <p className=" text-red-500 text-3xl">
+            ❌ Error occurred while fetching product lists
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  // Filter products
+  const filteredProducts = data.filter((product) => {
     if (selectedBrand && selectedCategory) {
       return (
         product.brand === selectedBrand && product.category === selectedCategory
@@ -63,7 +93,7 @@ function ProductList() {
       return true;
     }
   });
-
+  // Filter categories
   const BrandCategoryFiltering = ({ isCounterActive }) => {
     const [isDropdownOpen1, setIsDropdownOpen1] = useState(false);
     const [isDropdownOpen2, setIsDropdownOpen2] = useState(false);
@@ -128,17 +158,17 @@ function ProductList() {
           {isDropdownOpen1 && (
             <div className="dropdown absolute top-[190px] bg-white shadow-md p-2 mt-2 rounded-lg">
               <ul className="py-2 space-y-2 cursor-pointer w-36 overflow-y-auto max-h-52">
-                {[
-                  ...new Set(productListData.map((product) => product.brand)),
-                ].map((brand) => (
-                  <li
-                    key={brand}
-                    onClick={() => setSelectedBrand(brand)}
-                    className="hover:bg-gray-200"
-                  >
-                    {brand}
-                  </li>
-                ))}
+                {[...new Set(data.map((product) => product.brand))].map(
+                  (brand) => (
+                    <li
+                      key={brand}
+                      onClick={() => setSelectedBrand(brand)}
+                      className="hover:bg-gray-200"
+                    >
+                      {brand}
+                    </li>
+                  )
+                )}
               </ul>
               <button
                 onClick={clearBrand}
@@ -177,19 +207,17 @@ function ProductList() {
           {isDropdownOpen2 && (
             <div className="dropdown absolute top-[190px] bg-white shadow-md p-2 mt-2 rounded-lg">
               <ul className="py-2 space-y-2 cursor-pointer overflow-y-auto max-h-52 w-36">
-                {[
-                  ...new Set(
-                    productListData.map((product) => product.category)
-                  ),
-                ].map((category) => (
-                  <li
-                    key={category}
-                    onClick={() => setSelectedCategory(category)}
-                    className="hover:bg-gray-200"
-                  >
-                    {category}
-                  </li>
-                ))}
+                {[...new Set(data.map((product) => product.category))].map(
+                  (category) => (
+                    <li
+                      key={category}
+                      onClick={() => setSelectedCategory(category)}
+                      className="hover:bg-gray-200"
+                    >
+                      {category}
+                    </li>
+                  )
+                )}
               </ul>
               <button
                 onClick={clearCategory}
@@ -204,6 +232,7 @@ function ProductList() {
     );
   };
 
+  // Calculate original price
   const calculateOriginalPrice = (discountedPrice, discountPercentage) => {
     const originalPrice = Math.floor(
       (discountedPrice * 100) / (100 - discountPercentage)
