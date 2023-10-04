@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchProductDetails } from "../Redux-store/ProductDetailsSlice";
 import Image from "next/image";
 import RatingStar from "./Icons/RatingStar";
 import ButtonCart from "./Icons/ButtonCart";
 import { useRouter } from "next/router";
+import { Spinner } from "@nextui-org/react";
 
 function ProductDetails() {
   const router = useRouter();
@@ -25,11 +26,30 @@ function ProductDetails() {
 
   // Handle loading and error states
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex justify-center h-[65vh]">
+        <div className="flex items-center">
+          <Spinner
+            label="Loading..."
+            color="primary"
+            labelColor="primary"
+            size="lg"
+          />
+        </div>
+      </div>
+    );
   }
 
   if (error) {
-    return <div>Error occurred while fetching product details</div>;
+    return (
+      <div className="flex justify-center h-[75vh]">
+        <div className="flex items-center">
+          <h1 className=" text-red-500 text-3xl">
+            ❌ Error occurred while fetching product details
+          </h1>
+        </div>
+      </div>
+    );
   }
 
   // Check if the data exists before accessing its properties
