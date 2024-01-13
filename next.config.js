@@ -7,6 +7,7 @@ const nextConfig = {
     NEXT_PUBLIC_FIXER_API_KEY: process.env.NEXT_PUBLIC_FIXER_API_KEY,
   },
   images: {
+    domains: ["cdn.dummyjson.com"],
     remotePatterns: [
       {
         protocol: "https",
